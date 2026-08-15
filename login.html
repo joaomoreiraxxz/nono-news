@@ -94,11 +94,14 @@
     .login-msg.success { color: var(--success); }
 
     /* ========== ADMIN LAYOUT ========== */
+    #login-page.hidden { display: none !important; }
     #admin-page { display: none; }
     #admin-page.visible {
       display: flex;
       min-height: 100vh;
       min-height: 100svh;
+      position: relative;
+      z-index: 10;
     }
 
     /* ===== SIDEBAR (desktop) ===== */
@@ -694,7 +697,13 @@
   }
 
   function showAdmin() {
-    document.getElementById('login-page').style.display = 'none';
+    const loginEl = document.getElementById('login-page');
+    loginEl.classList.add('hidden');
+    loginEl.style.display = 'none';
+    loginEl.style.pointerEvents = 'none';
+    loginEl.style.visibility = 'hidden';
+    loginEl.style.position = 'absolute';
+    loginEl.style.zIndex = '-1';
     document.getElementById('admin-page').classList.add('visible');
     loadDashboard();
   }

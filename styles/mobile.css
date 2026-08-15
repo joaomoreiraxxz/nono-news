@@ -1,25 +1,13 @@
 /* ============================================================
-   MOBILE.CSS — Fix completo de layout para celular
+   MOBILE.CSS — Layout mobile completo e organizado
    ============================================================ */
 
-/* ===== FIX GLOBAL — impede qualquer elemento de vazar ===== */
-html {
+/* ===== FIX GLOBAL ===== */
+html, body {
   overflow-x: hidden;
   width: 100%;
 }
-
-body {
-  overflow-x: hidden;
-  width: 100%;
-  min-width: 0;
-}
-
-/* Nenhum elemento pode ser maior que a tela */
-section, article, div, nav, header, footer, aside, main {
-  max-width: 100%;
-  min-width: 0;
-}
-
+section, article, div, nav, header, footer, aside, main,
 img, video, iframe, embed, object {
   max-width: 100%;
 }
@@ -27,10 +15,8 @@ img, video, iframe, embed, object {
 /* ===== MOBILE (≤768px) ===== */
 @media (max-width: 768px) {
 
-  /* ----- FORÇA LARGURA TOTAL EM TUDO ----- */
   html, body {
-    width: 100vw !important;
-    max-width: 100vw !important;
+    width: 100% !important;
     overflow-x: hidden !important;
   }
 
@@ -38,267 +24,215 @@ img, video, iframe, embed, object {
   .container {
     width: 100% !important;
     max-width: 100% !important;
-    padding-left: 18px !important;
-    padding-right: 18px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    padding: 0 18px !important;
   }
 
   /* ----- TOP BAR ----- */
   .top-bar { display: none !important; }
 
-  /* ----- NAVBAR ----- */
-  .navbar {
-    width: 100% !important;
-    padding: 0 16px !important;
+  /* ----- NAVBAR — oculta links e impede overlay fantasma ----- */
+  .navbar { padding: 0 16px !important; }
+  .nav-links {
+    display: none !important;
+    /* Impede que o menu mobile oculto bloqueie cliques */
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
-  .navbar-inner {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  .nav-links { display: none !important; }
   .nav-actions .btn-subscribe,
   .nav-actions .nav-subscribe { display: none !important; }
 
-  /* ----- SEÇÕES ----- */
-  section, .section {
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow-x: hidden !important;
-    padding-top: 52px !important;
-    padding-bottom: 52px !important;
-  }
-
   /* ----- HERO ----- */
   .cinehero {
-    width: 100% !important;
-    max-width: 100vw !important;
     height: 100svh !important;
     min-height: 520px !important;
-    overflow: hidden !important;
   }
-  .cinehero-bg,
-  .cinehero-bg img,
-  .cinehero-img {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  .cinehero-content {
-    width: 100% !important;
-    padding: 0 18px !important;
-    max-width: 100% !important;
-  }
+  .cinehero-content { padding: 0 18px !important; }
   .cinehero-overlay {
     background:
       linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 100%),
       linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%) !important;
   }
-  .ch-word {
-    font-size: clamp(3.2rem, 15vw, 5rem) !important;
-    letter-spacing: -1px !important;
-  }
-  .cinehero-sub {
-    font-size: 0.88rem !important;
-    max-width: 100% !important;
-    margin-bottom: 28px !important;
-  }
+  .ch-word { font-size: clamp(3.2rem, 15vw, 5rem) !important; letter-spacing: -1px !important; }
+  .cinehero-sub { font-size: 0.88rem !important; margin-bottom: 24px !important; }
   .cinehero-actions {
-    flex-direction: column !important;
-    align-items: stretch !important;
+    flex-direction: row !important;
     gap: 10px !important;
-    width: 100% !important;
-    max-width: 300px !important;
+    flex-wrap: wrap !important;
   }
   .btn-cine-primary, .btn-cine-ghost {
-    text-align: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    padding: 14px !important;
+    padding: 12px 18px !important;
+    font-size: 0.8rem !important;
+    flex: 0 0 auto !important;
   }
   .cinehero-scroll { display: none !important; }
   .cinehero-infotag { left: 18px !important; bottom: 16px !important; }
 
-  /* ----- TICKER ----- */
-  .ticker-bar {
-    width: 100% !important;
+  /* ----- SEÇÕES ----- */
+  section, .section {
+    padding: 48px 0 !important;
     overflow: hidden !important;
   }
+  .section-header { margin-bottom: 28px !important; }
+  .section-header h2 { font-size: 1.4rem !important; }
+  .section-header p { font-size: 0.88rem !important; }
 
-  /* ----- FEED ----- */
-  #feed, [id="feed"] {
-    width: 100% !important;
-    overflow: hidden !important;
-  }
-  .news-grid,
-  #feed-grid,
-  .articles-grid {
-    grid-template-columns: 1fr !important;
-    width: 100% !important;
-    gap: 14px !important;
-  }
-  .news-card, .article-card {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
+  /* ----- TICKER ----- */
+  .ticker-bar { overflow: hidden !important; }
+
+  /* ----- FILTROS DE CATEGORIA ----- */
   .category-filter, #category-filter {
     display: flex !important;
-    width: 100% !important;
     overflow-x: auto !important;
     gap: 8px !important;
-    padding-bottom: 6px !important;
     scrollbar-width: none !important;
     -webkit-overflow-scrolling: touch !important;
   }
   .category-filter::-webkit-scrollbar { display: none !important; }
-  .filter-btn {
-    flex-shrink: 0 !important;
-    white-space: nowrap !important;
-  }
+  .filter-btn { flex-shrink: 0 !important; white-space: nowrap !important; }
 
-  /* ----- DESTAQUE / BENTO ----- */
-  .featured-grid, .bento-grid {
+  /* ----- FEED — 1 coluna ----- */
+  .news-grid, #feed-grid, .articles-grid {
     grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
-    width: 100% !important;
     gap: 14px !important;
   }
-  [class*="bento"] {
-    grid-column: 1 !important;
-    grid-row: auto !important;
-    width: 100% !important;
+
+  /* ----- DESTAQUE ----- */
+  .featured-grid, .bento-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
   }
+  [class*="bento"] { grid-column: 1 !important; grid-row: auto !important; }
 
   /* ----- ESCOLA HEADER ----- */
-  .escola-header {
-    width: 100% !important;
-    padding: 36px 0 24px !important;
-  }
+  .escola-header { padding: 36px 0 24px !important; }
   .escola-header-inner {
     flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 18px !important;
-    width: 100% !important;
+    gap: 16px !important;
   }
-  .escola-header-left,
-  .escola-header-right {
-    width: 100% !important;
-    align-items: flex-start !important;
-  }
-  .escola-header-left h2 { font-size: 1.4rem !important; }
   .escola-header-desc {
     text-align: left !important;
     max-width: 100% !important;
     font-size: 0.88rem !important;
   }
-  .btn-video-escola {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
+  .btn-video-escola { width: 100% !important; }
 
   /* ----- CARROSSEL ----- */
-  .escola-carousel {
-    width: 100% !important;
-    height: 230px !important;
-  }
-  .carousel-track { width: 100% !important; }
-  .carousel-slide { width: 100% !important; }
-  .carousel-caption { padding: 20px 16px 18px !important; }
-  .carousel-btn { width: 36px !important; height: 36px !important; }
-  .carousel-prev { left: 8px !important; }
-  .carousel-next { right: 8px !important; }
+  .escola-carousel { height: 230px !important; }
+  .carousel-caption { padding: 18px 16px !important; }
+  .carousel-btn { width: 34px !important; height: 34px !important; }
 
-  /* ----- INFO CARDS ----- */
+  /* ----- INFO CARDS — 2 colunas compactas ----- */
   .escola-info-row {
     grid-template-columns: repeat(2, 1fr) !important;
-    width: 100% !important;
   }
-  .escola-info-card { padding: 20px 14px !important; }
+  .escola-info-card { padding: 18px 14px !important; }
+  .escola-info-card h4 { font-size: 0.85rem !important; }
+  .escola-info-card p { font-size: 0.78rem !important; line-height: 1.5 !important; }
+  .escola-info-icon { width: 36px !important; height: 36px !important; margin-bottom: 10px !important; }
 
   /* ----- REDE ----- */
-  .section-rede { padding: 52px 0 !important; }
-  .rede-layout {
-    grid-template-columns: 1fr !important;
-    width: 100% !important;
-    gap: 36px !important;
-  }
-  .rede-left, .rede-right {
-    width: 100% !important;
-  }
+  .section-rede { padding: 48px 0 !important; }
+  .rede-layout { grid-template-columns: 1fr !important; gap: 32px !important; }
   .rede-logo { width: 120px !important; }
-  .rede-stat-grid {
-    grid-template-columns: 1fr 1fr !important;
-    width: 100% !important;
-  }
-  .rede-stat { padding: 20px 16px !important; }
-  .rede-stat-num { font-size: 1.9rem !important; }
+  .rede-stat-grid { grid-template-columns: 1fr 1fr !important; }
+  .rede-stat { padding: 18px 14px !important; }
+  .rede-stat-num { font-size: 1.8rem !important; }
 
   /* ----- AVALIAÇÕES ----- */
-  .ratings-grid, .reviews-grid {
-    grid-template-columns: 1fr !important;
-    width: 100% !important;
+  .ratings-grid, .reviews-grid { grid-template-columns: 1fr !important; }
+
+  /* ----- MAPA ----- */
+  .map-wrapper iframe { height: 250px !important; border-radius: 14px !important; }
+  .map-overlay-info { flex-direction: column !important; gap: 10px !important; }
+
+  /* ====================================
+     FOOTER — COMPACTO, 2 COLUNAS
+     ==================================== */
+  .main-footer { padding: 36px 0 0 !important; }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px 16px !important;
+    padding-bottom: 24px !important;
   }
 
-  /* ----- FOOTER ----- */
-  .footer-grid, .footer-inner, footer .container > div {
-    grid-template-columns: 1fr !important;
-    width: 100% !important;
-    gap: 28px !important;
+  /* Brand fica na linha de cima, ocupando 2 colunas */
+  .footer-brand {
+    grid-column: 1 / -1 !important;
+    text-align: center !important;
   }
-
-  /* ----- VIDEO MODAL ----- */
-  .vmodal-overlay {
-    padding: 0 !important;
-    align-items: flex-end !important;
-  }
-  .vmodal-card {
-    width: 100% !important;
+  .footer-brand p {
     max-width: 100% !important;
-    border-radius: 20px 20px 0 0 !important;
-    max-height: 92svh !important;
+    font-size: 0.82rem !important;
+    line-height: 1.6 !important;
+    margin: 0 auto !important;
   }
+  .footer-logo-img {
+    width: 40px !important;
+    height: 40px !important;
+    margin: 0 auto 10px !important;
+  }
+
+  /* Colunas side by side */
+  .footer-col { text-align: left !important; }
+  .footer-col h4 {
+    font-size: 0.78rem !important;
+    margin-bottom: 10px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .footer-col a {
+    font-size: 0.82rem !important;
+    padding: 4px 0 !important;
+  }
+
+  .footer-bottom {
+    padding: 14px !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* ====================================
+     VIDEO MODAL — BOTTOM SHEET
+     ==================================== */
+  .vmodal-overlay { padding: 0 !important; align-items: flex-end !important; }
+  .vmodal-card {
+    border-radius: 20px 20px 0 0 !important;
+    max-width: 100% !important;
+    max-height: 92svh !important;
+    transform: translateY(100%) scale(1) !important;
+  }
+  .vmodal-overlay.open .vmodal-card {
+    transform: translateY(0) scale(1) !important;
+  }
+  .vmodal-header { padding: 14px 16px !important; }
   .vmodal-video-inner {
     position: relative !important;
     width: 100% !important;
     height: 0 !important;
     padding-bottom: 56.25% !important;
-    overflow: hidden !important;
   }
   .vmodal-video-inner iframe {
     position: absolute !important;
     inset: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    border: none !important;
   }
-  .vmodal-footer {
-    flex-direction: column !important;
-    padding: 14px 16px !important;
-  }
-
-  /* ===== SEÇÃO HEADER GERAL ===== */
-  .section-header {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin-bottom: 28px !important;
-  }
-  .section-header h2 { font-size: 1.45rem !important; }
-  .section-header p { font-size: 0.88rem !important; }
+  .vmodal-footer { flex-direction: column !important; padding: 14px 16px !important; }
 }
 
 /* ===== EXTRA PEQUENO (≤420px) ===== */
 @media (max-width: 420px) {
-  .container { padding-left: 14px !important; padding-right: 14px !important; }
+  .container { padding: 0 14px !important; }
   .ch-word { font-size: clamp(2.8rem, 16vw, 4rem) !important; }
-  .escola-info-row { grid-template-columns: 1fr !important; }
-  .rede-stat-num { font-size: 1.6rem !important; }
+  .escola-info-row { grid-template-columns: 1fr 1fr !important; }
+  .footer-grid { gap: 18px 12px !important; }
 }
 
 /* ===== TABLET (769–1024px) ===== */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .container { padding: 0 28px !important; }
   .news-grid, #feed-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .escola-header-inner { flex-direction: column !important; }
   .escola-header-desc { text-align: left !important; max-width: 100% !important; }
   .escola-info-row { grid-template-columns: repeat(2, 1fr) !important; }
   .rede-layout { grid-template-columns: 1fr !important; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
