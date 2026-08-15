@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Nono News</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <style>
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center;
+      justify-content: center; background: #001d3d; overflow: hidden;
+      position: relative;
+    }
+
+    .bg-mesh {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(0, 77, 153, 0.5) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(0, 119, 204, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(0, 51, 102, 0.6) 0%, transparent 50%);
+      animation: meshShift 12s ease-in-out infinite alternate;
+    }
+    @keyframes meshShift {
+      0% { filter: hue-rotate(0deg); transform: scale(1); }
+      50% { filter: hue-rotate(10deg); transform: scale(1.05); }
+      100% { filter: hue-rotate(0deg); transform: scale(1); }
+    }
+
+    .orb { position: absolute; border-radius: 50%; filter: blur(60px); z-index: 1; opacity: 0.4; animation: orbFloat 15s ease-in-out infinite alternate; }
+    .orb-1 { width: 350px; height: 350px; background: #004d99; top: -80px; left: -80px; }
+    .orb-2 { width: 450px; height: 450px; background: #0077cc; bottom: -120px; right: -120px; animation-delay: -5s; }
+    .orb-3 { width: 250px; height: 250px; background: #003366; top: 50%; left: 60%; animation-delay: -8s; }
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.1); }
+      66% { transform: translate(-20px, 30px) scale(0.95); }
+      100% { transform: translate(10px, 10px) scale(1.05); }
+    }
+
+    .grid-lines {
+      position: fixed; inset: 0; z-index: 1;
+      background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Card */
+    .login-card, .admin-panel {
+      position: relative; z-index: 10; width: 100%; max-width: 420px; margin: 20px;
+      padding: 48px 40px; background: rgba(255,255,255,0.07); backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 28px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); color: white; text-align: center;
+      opacity: 0; transform: translateY(30px) scale(0.96);
+      animation: cardIn 0.8s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes cardIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .admin-panel { max-width: 600px; text-align: left; }
+
+    .login-logo { width: 72px; height: 72px; margin: 0 auto 24px; }
+    .login-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+    .login-card h2, .admin-panel h2 { color: white; font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: rgba(255,255,255,0.5); font-size: 0.88rem; margin-bottom: 36px; }
+
+    .field { margin-bottom: 20px; text-align: left; }
+    .field label { display: block; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.7); margin-bottom: 8px; letter-spacing: 0.5px; }
+    .field input, .field textarea, .field select {
+      width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; color: white; font-size: 0.95rem; font-family: inherit; outline: none;
+      transition: border 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.1); box-shadow: 0 0 0 4px rgba(0,119,204,0.2); }
+    .field textarea { min-height: 80px; resize: vertical; }
+    .field select option { background: #001d3d; color: white; }
+
+    .login-btn, .publish-btn {
+      width: 100%; padding: 16px; background: white; color: #003366; border: none; border-radius: 14px;
+      font-size: 1rem; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 8px;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+    .login-btn:hover, .publish-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.2); background: #f0d68a; }
+
+    .back-link { display: inline-block; margin-top: 28px; color: rgba(255,255,255,0.4); font-size: 0.85rem; transition: color 0.3s; }
+    .back-link:hover { color: rgba(255,255,255,0.8); }
+
+    .login-msg { margin-top: 16px; font-size: 0.88rem; min-height: 20px; }
+    .login-msg.error { color: #ff6b6b; }
+    .login-msg.success { color: #51cf66; }
+
+    .type-switch { display: flex; gap: 10px; margin-bottom: 24px; }
+    .type-switch button {
+      flex: 1; padding: 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15);
+      background: transparent; color: rgba(255,255,255,0.6); font-family: inherit; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .type-switch button.active { background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.3); }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+  <div class="grid-lines"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- LOGIN -->
+  <div class="login-card" id="login-view">
+    <div class="login-logo">
+      <img src="/assets/logo.png" alt="Logo">
+    </div>
+    <h2>Acesso Restrito</h2>
+    <p class="subtitle">Painel administrativo — Nono News</p>
+    <form id="login-form" autocomplete="off">
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="admin@escola.com" required>
+      </div>
+      <div class="field">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="Digite sua senha" required>
+      </div>
+      <button type="submit" class="login-btn">Entrar</button>
+    </form>
+    <p class="login-msg" id="login-msg"></p>
+    <a href="/" class="back-link">Voltar ao portal</a>
+  </div>
+
+  <!-- PAINEL ADMIN (publicar notícias) -->
+  <div class="admin-panel hidden" id="admin-view">
+    <h2>Publicar Conteúdo</h2>
+    <p class="subtitle">As notícias aparecerão automaticamente no portal.</p>
+
+    <div class="type-switch">
+      <button class="active" id="type-news" onclick="setType('news')">Notícia</button>
+      <button id="type-featured" onclick="setType('featured')">Destaque</button>
+    </div>
+
+    <form id="publish-form">
+      <div class="field">
+        <label>Título</label>
+        <input type="text" id="p-title" placeholder="Título da matéria" required>
+      </div>
+      <div class="field">
+        <label>Resumo</label>
+        <textarea id="p-summary" placeholder="Descrição breve..."></textarea>
+      </div>
+      <div class="field">
+        <label>Categoria</label>
+        <select id="p-category">
+          <option value="">Sem categoria</option>
+          <option value="Eventos">Eventos</option>
+          <option value="Esportes">Esportes</option>
+          <option value="Educação">Educação</option>
+          <option value="Inovação">Inovação</option>
+          <option value="Valores">Valores</option>
+          <option value="Saúde">Saúde</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>URL da Imagem (opcional)</label>
+        <input type="url" id="p-image" placeholder="https://...">
+      </div>
+      <button type="submit" class="publish-btn">Publicar</button>
+    </form>
+    <p class="login-msg" id="publish-msg"></p>
+    <a href="/" class="back-link">Voltar ao portal</a>
+  </div>
+
+  <script type="module">
+    import { login, saveNews, saveFeatured, isLoggedIn } from '/scripts/data.js';
+
+    let publishType = 'news';
+
+    window.setType = function(type) {
+      publishType = type;
+      document.getElementById('type-news').classList.toggle('active', type === 'news');
+      document.getElementById('type-featured').classList.toggle('active', type === 'featured');
+    };
+
+    // Se já está logado, pula direto pro painel
+    if (isLoggedIn()) {
+      document.getElementById('login-view').classList.add('hidden');
+      document.getElementById('admin-view').classList.remove('hidden');
+    }
+
+    // Login via API
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('login-msg');
+      const em = document.getElementById('email').value;
+      const pw = document.getElementById('password').value;
+      const btn = e.target.querySelector('.login-btn');
+
+      btn.textContent = 'Autenticando...';
+      btn.disabled = true;
+
+      try {
+        await login(em, pw);
+        msg.className = 'login-msg success';
+        msg.textContent = 'Autenticado! Abrindo painel...';
+        setTimeout(() => {
+          document.getElementById('login-view').classList.add('hidden');
+          document.getElementById('admin-view').classList.remove('hidden');
+        }, 800);
+      } catch (err) {
+        msg.className = 'login-msg error';
+        msg.textContent = err.message || 'Credenciais inválidas.';
+        btn.textContent = 'Entrar';
+        btn.disabled = false;
+      }
+    });
+
+    // Publicar via API
+    document.getElementById('publish-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('publish-msg');
+      const btn = e.target.querySelector('.publish-btn');
+      const article = {
+        title: document.getElementById('p-title').value,
+        summary: document.getElementById('p-summary').value,
+        category: document.getElementById('p-category').value,
+        image: document.getElementById('p-image').value,
+      };
+
+      btn.textContent = 'Publicando...';
+      btn.disabled = true;
+
+      try {
+        if (publishType === 'featured') {
+          await saveFeatured(article);
+        } else {
+          await saveNews(article);
+        }
+
+        msg.className = 'login-msg success';
+        msg.textContent = publishType === 'featured'
+          ? 'Destaque publicado no banco de dados!'
+          : 'Notícia publicada no banco de dados!';
+
+        document.getElementById('publish-form').reset();
+      } catch (err) {
+        msg.className = 'login-msg error';
+        msg.textContent = err.message || 'Erro ao publicar. Tente novamente.';
+      }
+
+      btn.textContent = 'Publicar';
+      btn.disabled = false;
+      setTimeout(() => { msg.textContent = ''; }, 4000);
+    });
+  </script>
+</body>
+</html>

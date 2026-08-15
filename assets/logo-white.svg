@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600" fill="white">
+  <!-- Letra A branca - Para uso em fundos escuros -->
+  <path d="M210 0 L0 600 L90 600 L210 0Z"/>
+  <path d="M260 0 L500 600 L410 600 L260 0Z"/>
+  <path d="M330 380 L500 380 L500 450 L350 450Z"/>
+  <path d="M370 460 L500 460 L500 600 L410 600Z"/>
+  
+  <!-- Swooshes (mesmo tom do fundo escuro para criar os cortes) -->
+  <path d="M30 420 Q120 340 220 370 Q320 400 420 320 Q460 295 500 285 L500 310 Q460 320 420 348 Q320 428 220 398 Q120 368 30 448 Z" fill="#001d3d"/>
+  <path d="M10 480 Q100 400 200 430 Q300 460 400 380 Q440 355 500 340 L500 365 Q440 383 400 408 Q300 488 200 458 Q100 428 10 508 Z" fill="#001d3d"/>
+  <path d="M0 540 Q80 460 180 490 Q280 520 380 440 Q420 415 480 400 L500 400 L500 425 Q420 443 380 468 Q280 548 180 518 Q80 488 0 568 Z" fill="#001d3d"/>
+</svg>

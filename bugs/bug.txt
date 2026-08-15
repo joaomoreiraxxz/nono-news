@@ -1,0 +1,3 @@
+[2026-08-14] [FRONT] - Tema claro causava desconforto visual e texto invisível na seção escura. CORREÇÃO: Mudança completa para DARK MODE — fundo #0a0f1a, textos claros #e8ecf2, glass com fundo escuro, navbar escura, filter buttons escuros, contrastes corrigidos em todas as seções. Avaliação redesenhada com campo de nome obrigatório, SVG decorativo rotacionando, e validação JS. Adicionado Google Maps embed com botão "Traçar Rota" e SVG wave dividers entre seções.
+
+STATUS: CORRIGIDO

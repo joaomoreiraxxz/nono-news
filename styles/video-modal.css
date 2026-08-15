@@ -1,0 +1,416 @@
+/* ============================================================
+   VIDEO-MODAL.CSS — Modal Premium "Conheça Nossa Escola"
+   ============================================================ */
+
+/* ===== BOTÃO "CONHEÇA NOSSA ESCOLA" ===== */
+
+.escola-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.btn-video-escola {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 24px 14px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(212, 168, 67, 0.35);
+  border-radius: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+/* Shimmer no hover */
+.btn-video-escola::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(212,168,67,0.08), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.btn-video-escola:hover::before { transform: translateX(100%); }
+
+.btn-video-escola:hover {
+  background: rgba(212, 168, 67, 0.12);
+  border-color: rgba(212, 168, 67, 0.65);
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(212, 168, 67, 0.15),
+    0 0 20px rgba(212, 168, 67, 0.08);
+}
+
+/* Anel pulsante ao redor do ícone de play */
+.btn-video-pulse {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(212, 168, 67, 0.15);
+  transform: translateY(-50%);
+  animation: videoPulseRing 2.5s ease-in-out infinite;
+}
+
+@keyframes videoPulseRing {
+  0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.6; }
+  50%       { transform: translateY(-50%) scale(1.4); opacity: 0; }
+}
+
+/* Círculo do ícone */
+.btn-video-icon {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold, #d4a843), #c8940a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 16px rgba(212,168,67,0.35);
+}
+
+.btn-video-escola:hover .btn-video-icon {
+  transform: scale(1.1);
+}
+
+.btn-video-icon svg {
+  margin-left: 2px; /* visualmente centra o triângulo */
+}
+
+/* Textos */
+.btn-video-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 1;
+}
+
+.btn-video-text strong {
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  display: block;
+}
+
+.btn-video-text small {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  display: block;
+}
+
+
+/* ===== OVERLAY DO MODAL ===== */
+.vmodal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 88888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.vmodal-overlay.open {
+  pointer-events: all;
+  visibility: visible;
+}
+
+/* Backdrop escuro com blur */
+.vmodal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition:
+    background 0.45s ease,
+    backdrop-filter 0.45s ease;
+}
+
+.vmodal-overlay.open .vmodal-backdrop {
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* ===== CARD DO MODAL ===== */
+.vmodal-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 900px;
+  background: linear-gradient(
+    145deg,
+    rgba(15, 21, 36, 0.97) 0%,
+    rgba(10, 15, 26, 0.98) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(212, 168, 67, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* Animação de entrada: sobe + escala */
+  transform: translateY(60px) scale(0.92);
+  opacity: 0;
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.45s ease;
+}
+
+.vmodal-overlay.open .vmodal-card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Linha dourada decorativa no topo do card */
+.vmodal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold, #d4a843) 40%, var(--gold-light, #f0d68a) 60%, transparent);
+  z-index: 2;
+}
+
+/* ===== HEADER DO MODAL ===== */
+.vmodal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.vmodal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.vmodal-logo-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary, #003366), var(--primary-dark, #001529));
+  border: 1px solid rgba(212, 168, 67, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 6px;
+}
+
+.vmodal-logo {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  min-width: unset !important;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
+.vmodal-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vmodal-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold, #d4a843);
+}
+
+.vmodal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.vmodal-title span {
+  background: linear-gradient(135deg, var(--gold-light, #f0d68a), var(--gold, #d4a843));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Botão de fechar */
+.vmodal-close {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.vmodal-close:hover {
+  background: rgba(220, 50, 50, 0.15);
+  border-color: rgba(220, 50, 50, 0.4);
+  color: #ff6b6b;
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* ===== ÁREA DO VÍDEO ===== */
+.vmodal-video-wrap {
+  padding: 0;
+  background: #000;
+  position: relative;
+}
+
+/* Efeito de brilho nas bordas do vídeo */
+.vmodal-video-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.4) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 8%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Proporção 16:9 responsiva */
+.vmodal-video-inner {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+}
+
+.vmodal-video-inner iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ===== FOOTER DO MODAL ===== */
+.vmodal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+  flex-wrap: wrap;
+}
+
+.vmodal-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.vmodal-tag {
+  padding: 5px 12px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Link "Ver no YouTube" */
+.vmodal-yt-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255, 80, 80, 0.85);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: color 0.25s, gap 0.25s;
+  border-bottom: 1px solid rgba(255, 80, 80, 0.3);
+  padding-bottom: 1px;
+}
+
+.vmodal-yt-link:hover {
+  color: #ff4444;
+  gap: 10px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .vmodal-overlay { padding: 0; align-items: flex-end; }
+
+  .vmodal-card {
+    border-radius: 20px 20px 0 0;
+    max-width: 100%;
+    transform: translateY(100%) scale(1);
+  }
+
+  .vmodal-overlay.open .vmodal-card {
+    transform: translateY(0) scale(1);
+  }
+
+  .vmodal-footer { flex-direction: column; align-items: flex-start; }
+  .vmodal-title { font-size: 0.9rem; }
+  .vmodal-tags { gap: 6px; }
+  .vmodal-tag { font-size: 0.7rem; padding: 4px 10px; }
+
+  .escola-header-right { align-items: flex-start; }
+  .btn-video-escola { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .vmodal-header { padding: 16px; }
+  .vmodal-footer { padding: 14px 16px; }
+}

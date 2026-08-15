@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nono News — Projeto de Reportagem | 9º MA + MB</title>
+  <meta name="description" content="Nono News: portal de reportagem escolar criado pelos alunos do 9º ano (MA e MB) da Escola Adventista Centro América, Araés, Cuiabá-MT.">
+  <link rel="icon" href="/assets/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap">
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/animations.css">
+  <link rel="stylesheet" href="/styles/components.css">
+  <link rel="stylesheet" href="/styles/extras.css">
+  <link rel="stylesheet" href="/styles/redesign.css">
+  <link rel="stylesheet" href="/styles/patterns.css">
+  <link rel="stylesheet" href="/styles/video-modal.css">
+</head>
+<body>
+
+  <!-- ========== LOADER ========== -->
+  <div id="loader">
+    <!-- Cantos decorativos dourados -->
+    <div class="loader-corner loader-corner-tl"></div>
+    <div class="loader-corner loader-corner-tr"></div>
+    <div class="loader-corner loader-corner-bl"></div>
+    <div class="loader-corner loader-corner-br"></div>
+
+    <!-- Scan line dourada horizontal -->
+    <div class="loader-scan"></div>
+
+    <!-- Conteúdo central -->
+    <div class="loader-logo-wrap">
+      <img src="/assets/logo.png" alt="Logo" class="loader-logo-img">
+      <div class="loader-logo-line"></div>
+      <div class="loader-title">
+        <span class="loader-word">Nono</span>
+        <span class="loader-word loader-word-gold">News</span>
+      </div>
+      <div class="loader-subtitle">9º MA + MB — Reportagem Escolar</div>
+    </div>
+
+    <!-- Barra de progresso na base -->
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="#" class="nav-brand">
+        <img src="/assets/logo.png" alt="Logo" class="nav-logo-img">
+        <div class="nav-brand-text">
+          <strong>Nono News</strong>
+          <small>9º MA + MB</small>
+        </div>
+      </a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      <div class="nav-links" id="nav-links">
+        <a href="#feed">Feed</a>
+        <a href="#escola">A Escola</a>
+        <a href="#rede">Rede</a>
+        <a href="#sobre">Quem Somos</a>
+        <a href="#avaliar">Avalie</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO CINEMATOGRÁFICO ========== -->
+  <section class="cinehero" id="hero">
+    <!-- Cortina de reveal: desliza para cima revelando a foto -->
+    <div class="cinehero-curtain" id="cinehero-curtain"></div>
+
+    <!-- Foto de fundo da escola real -->
+    <div class="cinehero-bg">
+      <img src="/assets/escola-ext1.png" alt="Colégio Adventista Centro América" class="cinehero-img" id="cinehero-img">
+    </div>
+    <div class="cinehero-overlay"></div>
+
+    <!-- Linha dourada animada diagonal -->
+    <div class="cinehero-scanline"></div>
+
+    <!-- Conteúdo -->
+    <div class="cinehero-content">
+      <div class="cinehero-eyebrow" id="ch-eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span>Projeto de Reportagem — 9º Ano</span>
+      </div>
+
+      <h1 class="cinehero-title">
+        <div class="ch-line" id="ch-line1">
+          <span class="ch-word">Nono</span>
+        </div>
+        <div class="ch-line ch-line-gold" id="ch-line2">
+          <span class="ch-word">News</span>
+        </div>
+      </h1>
+
+      <p class="cinehero-sub" id="ch-sub">
+        Turmas MA &amp; MB — Escola Adventista Centro América<br>
+        <em>Araés · Cuiabá · Mato Grosso</em>
+      </p>
+
+      <div class="cinehero-actions" id="ch-actions">
+        <a href="#feed" class="btn-cine-primary">Ver Publicações</a>
+        <a href="#escola" class="btn-cine-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Nossa Escola
+        </a>
+      </div>
+    </div>
+
+    <!-- Info flutuante no canto inferior esquerdo -->
+    <div class="cinehero-infotag" id="ch-infotag">
+      <div class="infotag-dot"></div>
+      <span>Não oficial · Feito por estudantes · 2026</span>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="cinehero-scroll">
+      <div class="scroll-track"><div class="scroll-thumb"></div></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ========== BREAKING NEWS TICKER ========== -->
+  <div class="ticker-bar">
+    <div class="ticker-label">AO VIVO</div>
+    <div class="ticker-track">
+      <div class="ticker-inner" id="ticker-inner">
+        <span>Nono News é um projeto estudantil do 9º MA e MB</span>
+        <span>Escola Adventista Centro América — Araés, Cuiabá-MT</span>
+        <span>Rede Adventista presente em 165+ países</span>
+        <span>Mais de 9.000 escolas no mundo todo</span>
+        <span>Conteúdo publicado pelos alunos, para a comunidade escolar</span>
+        <span>Nono News é um projeto estudantil do 9º MA e MB</span>
+        <span>Escola Adventista Centro América — Araés, Cuiabá-MT</span>
+        <span>Rede Adventista presente em 165+ países</span>
+        <span>Mais de 9.000 escolas no mundo todo</span>
+        <span>Conteúdo publicado pelos alunos, para a comunidade escolar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FEED DE NOTÍCIAS ========== -->
+  <section id="feed" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Feed de Notícias</span>
+        <h2>O que está <span class="text-gold">acontecendo</span></h2>
+        <p>Reportagens publicadas pela equipe do Nono News.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="category-filter reveal" id="category-filter">
+        <button class="filter-btn active" data-cat="all">Tudo</button>
+        <button class="filter-btn" data-cat="Eventos">Eventos</button>
+        <button class="filter-btn" data-cat="Esportes">Esportes</button>
+        <button class="filter-btn" data-cat="Educação">Educação</button>
+        <button class="filter-btn" data-cat="Inovação">Inovação</button>
+        <button class="filter-btn" data-cat="Valores">Valores</button>
+      </div>
+      <div id="feed-hero-card" class="feed-hero-card" style="display:none;"></div>
+      <div class="feed-grid" id="feed-grid"></div>
+      <div id="feed-empty" class="empty-state reveal">
+        <div class="empty-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 12h10"/></svg>
+        </div>
+        <h3>Nenhuma publicação ainda</h3>
+        <p>As reportagens do Nono News aparecerão aqui quando publicadas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== A ESCOLA — EDITORIAL COM FOTOS ========== -->
+  <section id="escola" class="section-escola">
+    <!-- Faixa de título editorial -->
+    <div class="escola-header reveal">
+      <div class="container">
+        <div class="escola-header-inner">
+          <div>
+            <span class="section-label" style="color:var(--gold-light);">Nossa Escola</span>
+            <h2 style="color:white; font-size:clamp(2rem,5vw,3.5rem);">Colégio Adventista<br><span class="text-gold">Centro América</span></h2>
+          </div>
+          <div class="escola-header-right">
+            <p class="escola-header-desc">Araés · Cuiabá · Mato Grosso · Brasil<br>Uma escola de excelência, no coração da cidade.</p>
+            <!-- Botão Conheça Nossa Escola -->
+            <button class="btn-video-escola" id="btn-open-video" aria-label="Assistir vídeo da escola">
+              <span class="btn-video-pulse"></span>
+              <span class="btn-video-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </span>
+              <span class="btn-video-text">
+                <strong>Conheça Nossa Escola</strong>
+                <small>Assista ao vídeo oficial</small>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrossel das fotos da escola -->
+    <div class="escola-carousel reveal">
+      <div class="carousel-track" id="escola-track">
+        <div class="carousel-slide">
+          <img src="/assets/escola-ext1.png" alt="Fachada principal">
+          <div class="carousel-caption">
+            <span class="carousel-tag">Fachada Principal</span>
+            <h3>Moderno e imponente no coração de Araés</h3>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="/assets/escola-ext2.png" alt="Estrutura externa">
+          <div class="carousel-caption">
+            <span class="carousel-tag">Estrutura</span>
+            <h3>Arquitetura contemporânea com identidade adventista</h3>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="/assets/escola-int1.png" alt="Recepção">
+          <div class="carousel-caption">
+            <span class="carousel-tag">Recepção</span>
+            <h3>Espaço de acolhimento com design sofisticado</h3>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="/assets/escola-int2.png" alt="Interior">
+          <div class="carousel-caption">
+            <span class="carousel-tag">Espaços internos</span>
+            <h3>Ambientes pensados para o aprendizado de excelência</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <button class="carousel-btn carousel-prev" id="escola-prev" aria-label="Anterior">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carousel-btn carousel-next" id="escola-next" aria-label="Próximo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <!-- Dots de progresso -->
+      <div class="carousel-dots" id="escola-dots">
+        <button class="carousel-dot active" data-index="0"></button>
+        <button class="carousel-dot" data-index="1"></button>
+        <button class="carousel-dot" data-index="2"></button>
+        <button class="carousel-dot" data-index="3"></button>
+      </div>
+
+      <!-- Contador -->
+      <div class="carousel-counter">
+        <span id="escola-current">1</span> / <span>4</span>
+      </div>
+    </div>
+
+
+    <!-- Info cards sobre a escola -->
+    <div class="container">
+      <div class="escola-info-row reveal">
+        <div class="escola-info-card">
+          <div class="escola-info-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <h4>Educação Completa</h4>
+          <p>Do Educação Infantil ao Ensino Médio com excelência acadêmica e formação integral.</p>
+        </div>
+        <div class="escola-info-card">
+          <div class="escola-info-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h4>Desde 1968</h4>
+          <p>Décadas formando gerações de alunos preparados para os desafios do mundo.</p>
+        </div>
+        <div class="escola-info-card">
+          <div class="escola-info-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h4>Comunidade Adventista</h4>
+          <p>Ambiente acolhedor com valores cristãos, suporte pastoral e cuidado individual.</p>
+        </div>
+        <div class="escola-info-card">
+          <div class="escola-info-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h4>Alto Desempenho</h4>
+          <p>Resultados acima da média no ENEM. Alunos prontos para universidades e carreira.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== REDE ADVENTISTA — IMPACTO GLOBAL ========== -->
+  <section id="rede" class="section-rede">
+    <div class="container">
+      <div class="rede-layout">
+        <div class="rede-left reveal-left">
+          <img src="/assets/logo-full.png" alt="Educação Adventista" class="rede-logo">
+          <h2>A maior rede de educação <span class="text-gold">confessional do mundo</span></h2>
+          <p>A Rede Adventista de Educação está presente em todos os continentes, unindo excelência acadêmica com formação de caráter. O Colégio Adventista Centro América faz parte dessa história global.</p>
+          <a href="https://www.educacaoadventista.org.br/" target="_blank" class="btn-rede-link">
+            Conheça a Rede
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="rede-right reveal-right">
+          <div class="rede-stat-grid">
+            <div class="rede-stat">
+              <div class="rede-stat-num" data-target="165">0</div>
+              <div class="rede-stat-label">Países</div>
+            </div>
+            <div class="rede-stat">
+              <div class="rede-stat-num" data-target="9000">0</div>
+              <div class="rede-stat-label">Escolas</div>
+            </div>
+            <div class="rede-stat">
+              <div class="rede-stat-num" data-target="2000000">0</div>
+              <div class="rede-stat-label">Alunos</div>
+            </div>
+            <div class="rede-stat">
+              <div class="rede-stat-num" data-target="1872">0</div>
+              <div class="rede-stat-label">Fundada em</div>
+            </div>
+          </div>
+          <div class="rede-fact">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <p>A Igreja Adventista do Sétimo Dia opera o maior sistema privado de educação do mundo, com presença em todos os continentes habitados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== QUEM SOMOS ========== -->
+  <section id="sobre" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Quem somos</span>
+        <h2>O Projeto <span class="text-gold">Nono News</span></h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="about-grid reveal-scale">
+        <div class="about-card">
+          <div class="about-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h4>Quem fez?</h4>
+          <p>Alunos do <strong>9º ano — turmas MA e MB</strong> da Escola Adventista Centro América, Araés, Cuiabá-MT.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h4>O que é?</h4>
+          <p>Um trabalho de <strong>reportagem escolar</strong>. O nome "Nono" vem do 9º ano — as duas turmas juntas numa missão só.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h4>Importante</h4>
+          <p>Este portal <strong>não é oficial</strong> da escola nem da Rede Adventista. É um projeto acadêmico feito pelos alunos.</p>
+        </div>
+      </div>
+      <div class="about-tags-wrap reveal">
+        <span class="about-tag">9º Ano</span>
+        <span class="about-tag">Turma MA</span>
+        <span class="about-tag">Turma MB</span>
+        <span class="about-tag">Reportagem</span>
+        <span class="about-tag">EACA</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== AVALIAÇÃO ========== -->
+  <section id="avaliar" class="section section-dark">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label" style="color:var(--gold-light);">Sua opinião</span>
+        <h2 style="color:white;">Avalie o <span class="text-gold">Nono News</span></h2>
+        <p style="color:rgba(255,255,255,0.55);">Nos conta o que você achou do projeto.</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="rate-modal reveal-scale">
+        <div class="rate-modal-header">
+          <img src="/assets/logo.png" alt="" class="rate-modal-logo">
+          <div>
+            <h3>Deixe sua avaliação</h3>
+            <p>Sua opinião ajuda a melhorar o projeto</p>
+          </div>
+        </div>
+        <div class="rate-modal-stars">
+          <div class="rate-stars" data-type="site">
+            <button class="star-btn" data-value="1">★</button>
+            <button class="star-btn" data-value="2">★</button>
+            <button class="star-btn" data-value="3">★</button>
+            <button class="star-btn" data-value="4">★</button>
+            <button class="star-btn" data-value="5">★</button>
+          </div>
+          <p class="rate-hint" id="rate-hint-text">Toque em uma estrela para começar</p>
+        </div>
+        <div class="rate-modal-form">
+          <div class="rate-field">
+            <label for="rate-name">Nome</label>
+            <input type="text" id="rate-name" placeholder="Seu nome" required>
+          </div>
+          <div class="rate-field">
+            <label for="rate-textarea">Comentário <span style="opacity:0.4;font-weight:400;">(opcional)</span></label>
+            <textarea id="rate-textarea" placeholder="O que você achou do Nono News?"></textarea>
+          </div>
+          <button class="btn btn-gold rate-submit" id="rate-submit" style="width:100%;justify-content:center;">Enviar Avaliação</button>
+          <p class="rate-msg" id="rate-msg"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LOCALIZAÇÃO ========== -->
+  <section id="mapa" class="section section-dark">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label" style="color:var(--gold-light);">Onde estamos</span>
+        <h2 style="color:white;">Encontre a <span class="text-gold">EACA</span></h2>
+        <p style="color:rgba(255,255,255,0.6);">Escola Adventista Centro América — Araés, Cuiabá-MT</p>
+        <div class="section-divider"></div>
+      </div>
+      <div class="map-wrapper reveal-scale">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3843.134!2d-56.0978!3d-15.5875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x939db1b0e2c7c6ab%3A0x2c4b52e1d8e04f82!2sEscola%20Adventista%20Centro%20Am%C3%A9rica!5e0!3m2!1spt-BR!2sbr!4v1700000000000" width="100%" height="420" style="border:0;border-radius:20px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-overlay-info">
+          <div class="map-info-card">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <strong>Endereço</strong>
+              <p>R. Osório Duque Estrada, S/N — Araés</p>
+            </div>
+          </div>
+          <a href="https://www.google.com/maps/dir//Escola+Adventista+Centro+Am%C3%A9rica+Cuiab%C3%A1" target="_blank" class="btn btn-gold" style="font-size:0.85rem;padding:10px 20px;">Traçar Rota</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="/assets/logo.png" alt="Logo" class="footer-logo-img" id="footer-logo">
+          <p><strong>Nono News</strong> — Projeto de reportagem do 9º MA + MB da Escola Adventista Centro América, Araés, Cuiabá-MT. Este portal não é oficial da escola.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <a href="#feed">Feed</a>
+          <a href="#escola">A Escola</a>
+          <a href="#rede">Rede Adventista</a>
+          <a href="#sobre">Quem Somos</a>
+          <a href="#avaliar">Avaliação</a>
+          <a href="#mapa">Localização</a>
+        </div>
+        <div class="footer-col">
+          <h4>Links Úteis</h4>
+          <a href="https://eaca.educacaoadventista.org.br/" target="_blank">Portal Oficial EACA</a>
+          <a href="https://www.educacaoadventista.org.br/" target="_blank">Rede Adventista</a>
+        </div>
+        <div class="footer-col">
+          <h4>Escola</h4>
+          <a>(65) 3021-7800</a>
+          <a>Araés, Cuiabá — MT</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Nono News — Projeto Acadêmico | 9º MA + MB — EACA
+    </div>
+  </footer>
+
+  <!-- ========== MODAL VÍDEO — CONHEÇA NOSSA ESCOLA ========== -->
+  <div id="video-modal" class="vmodal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Vídeo da escola">
+    <!-- Backdrop clicável -->
+    <div class="vmodal-backdrop" id="vmodal-backdrop"></div>
+
+    <!-- Card do modal -->
+    <div class="vmodal-card" id="vmodal-card">
+
+      <!-- Header do modal -->
+      <div class="vmodal-header">
+        <div class="vmodal-header-left">
+          <div class="vmodal-logo-wrap">
+            <img src="/assets/logo.png" alt="EACA" class="vmodal-logo">
+          </div>
+          <div class="vmodal-header-info">
+            <span class="vmodal-label">Apresentação Oficial</span>
+            <h3 class="vmodal-title">Colégio Adventista <span>Centro América</span></h3>
+          </div>
+        </div>
+        <button class="vmodal-close" id="vmodal-close" aria-label="Fechar vídeo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Wrapper do vídeo YouTube -->
+      <div class="vmodal-video-wrap">
+        <div class="vmodal-video-inner">
+          <iframe
+            id="vmodal-iframe"
+            src=""
+            title="Colégio Adventista Centro América — Vídeo Institucional"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Footer do modal -->
+      <div class="vmodal-footer">
+        <div class="vmodal-tags">
+          <span class="vmodal-tag">📍 Araés · Cuiabá · MT</span>
+          <span class="vmodal-tag">🎓 Educação Adventista</span>
+          <span class="vmodal-tag">⭐ Desde 1968</span>
+        </div>
+        <a href="https://www.youtube.com/watch?v=q_R-ZKMCUq4" target="_blank" class="vmodal-yt-link" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          Ver no YouTube
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="/scripts/app.js"></script>
+</body>
+</html>
