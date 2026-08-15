@@ -1,0 +1,215 @@
+/* ============================================================
+   MOBILE.CSS — Layout responsivo completo para celular
+   Corrige: hero, navbar, seções empilhadas, video modal, tudo
+   ============================================================ */
+
+/* ===== BASE MOBILE (≤768px) ===== */
+@media (max-width: 768px) {
+
+  /* ----- TOP BAR ----- */
+  .top-bar { display: none; }
+
+  /* ----- NAVBAR ----- */
+  .navbar { padding: 0 16px; }
+  .nav-links { display: none; }
+  .nav-actions .btn-subscribe { display: none; }
+
+  /* Hamburger — mostra no mobile */
+  .nav-hamburger {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ----- HERO ----- */
+  .cinehero { height: 100svh; min-height: 540px; }
+  .cinehero-content { padding: 0 20px; }
+  .ch-word { font-size: clamp(3rem, 14vw, 5rem) !important; letter-spacing: -2px !important; }
+  .cinehero-sub { font-size: 0.9rem; margin-bottom: 28px; }
+  .cinehero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+  }
+  .btn-cine-primary, .btn-cine-ghost {
+    text-align: center;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 0.88rem;
+  }
+  .cinehero-infotag { left: 20px; bottom: 20px; }
+  .cinehero-scroll { display: none; }
+
+  /* ----- ESCOLA HEADER ----- */
+  .escola-header { padding: 40px 0 30px; }
+  .escola-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .escola-header-desc {
+    text-align: left;
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+  .escola-header-right {
+    align-items: flex-start;
+    width: 100%;
+  }
+  .btn-video-escola { width: 100%; max-width: 360px; }
+
+  /* ----- ESCOLA CAROUSEL ----- */
+  .escola-carousel { height: 260px; }
+  .carousel-caption { padding: 24px 20px 20px; }
+  .carousel-caption h3 { font-size: 1rem; }
+  .carousel-btn { width: 36px; height: 36px; }
+  .carousel-prev { left: 10px; }
+  .carousel-next { right: 10px; }
+
+  /* ----- ESCOLA INFO ROW ----- */
+  .escola-info-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+  }
+  .escola-info-card { padding: 24px 18px; }
+  .escola-info-card h4 { font-size: 0.9rem; }
+  .escola-info-card p { font-size: 0.82rem; }
+
+  /* ----- SEÇÃO REDE ----- */
+  .section-rede { padding: 60px 0; }
+  .rede-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .rede-logo { width: 140px; margin-bottom: 20px; }
+  .rede-stat-grid { grid-template-columns: 1fr 1fr; }
+  .rede-stat { padding: 24px 20px; }
+  .rede-stat-num { font-size: 2.2rem; }
+
+  /* ----- TICKER ----- */
+  .ticker-label { padding: 0 12px; font-size: 0.65rem; }
+  .ticker-inner span { padding: 0 24px; font-size: 0.78rem; }
+
+  /* ----- SEÇÕES GENÉRICAS ----- */
+  .section-wrapper,
+  .section-content,
+  section { padding-left: 0 !important; padding-right: 0 !important; }
+
+  .container { padding: 0 16px !important; }
+
+  /* ----- FEED / GRID DE NOTÍCIAS ----- */
+  .news-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .news-card { border-radius: 16px; }
+  .news-card-img { height: 200px; }
+
+  .featured-grid,
+  .bento-grid {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+  }
+
+  /* ----- AVALIAÇÕES ----- */
+  .ratings-grid,
+  .reviews-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ----- FOOTER ----- */
+  .footer-grid,
+  .footer-inner {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  /* ----- VIDEO MODAL ----- */
+  .vmodal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .vmodal-card {
+    border-radius: 20px 20px 0 0;
+    max-width: 100%;
+    max-height: 92svh;
+    overflow-y: auto;
+  }
+  .vmodal-header { padding: 14px 16px; gap: 10px; }
+  .vmodal-logo-wrap { width: 36px; height: 36px; }
+  .vmodal-title { font-size: 0.88rem; }
+  .vmodal-label { font-size: 0.65rem; letter-spacing: 1.5px; }
+  .vmodal-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  .vmodal-tags { gap: 6px; }
+  .vmodal-tag { font-size: 0.7rem; padding: 4px 10px; }
+
+  /* Iframe YouTube — 16:9 fixo */
+  .vmodal-video-inner {
+    padding-bottom: 56.25% !important;
+    height: 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .vmodal-video-inner iframe {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+  }
+}
+
+/* ===== EXTRA SMALL (≤480px) ===== */
+@media (max-width: 480px) {
+  .ch-word { font-size: clamp(2.5rem, 13vw, 4rem) !important; }
+  .cinehero-eyebrow span { font-size: 0.72rem; letter-spacing: 2px; }
+  .cinehero-sub { font-size: 0.85rem; }
+
+  .escola-carousel { height: 220px; }
+  .escola-info-row { grid-template-columns: 1fr; }
+
+  .vmodal-close { width: 32px; height: 32px; }
+  .vmodal-header-left { gap: 10px; }
+
+  .rede-stat-grid { grid-template-columns: 1fr 1fr; }
+  .rede-stat-num { font-size: 1.8rem; }
+  .rede-stat { padding: 18px 16px; }
+}
+
+/* ===== TABLET (769px – 1024px) ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .cinehero-content { padding: 0 32px; }
+  .ch-word { font-size: clamp(4rem, 10vw, 7rem) !important; }
+  .rede-layout { grid-template-columns: 1fr; gap: 50px; }
+  .escola-info-row { grid-template-columns: repeat(2, 1fr); }
+  .escola-header-inner { flex-direction: column; gap: 24px; }
+  .escola-header-desc { text-align: left; max-width: 100%; }
+  .news-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ===== FIX YOUTUBE — garante autoplay só quando modal abre ===== */
+/* O iframe do YouTube não deve existir no DOM até o modal abrir */
+.vmodal-video-inner iframe[src=""] { display: none; }

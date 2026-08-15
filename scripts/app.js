@@ -390,9 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const vmodalIframe = document.getElementById('vmodal-iframe');
   const btnOpenVideo = document.getElementById('btn-open-video');
 
-  // Constrói a URL do embed com autoplay e qualidade máxima
   const buildYTUrl = () =>
-    `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&color=white&vq=hd1080`;
+    `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&color=white&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`;
 
   function openVideoModal() {
     // Carrega o iframe apenas agora (lazy load)
