@@ -698,12 +698,7 @@
 
   function showAdmin() {
     const loginEl = document.getElementById('login-page');
-    loginEl.classList.add('hidden');
-    loginEl.style.display = 'none';
-    loginEl.style.pointerEvents = 'none';
-    loginEl.style.visibility = 'hidden';
-    loginEl.style.position = 'absolute';
-    loginEl.style.zIndex = '-1';
+    if (loginEl) loginEl.remove();
     document.getElementById('admin-page').classList.add('visible');
     loadDashboard();
   }

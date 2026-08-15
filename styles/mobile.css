@@ -30,13 +30,16 @@ img, video, iframe, embed, object {
   /* ----- TOP BAR ----- */
   .top-bar { display: none !important; }
 
-  /* ----- NAVBAR — oculta links e impede overlay fantasma ----- */
+  /* ----- NAVBAR — corrige menu mobile ----- */
   .navbar { padding: 0 16px !important; }
-  .nav-links {
-    display: none !important;
-    /* Impede que o menu mobile oculto bloqueie cliques */
+  .nav-links:not(.open) {
     visibility: hidden !important;
     pointer-events: none !important;
+  }
+  .nav-links.open {
+    visibility: visible !important;
+    pointer-events: auto !important;
+    display: flex !important;
   }
   .nav-actions .btn-subscribe,
   .nav-actions .nav-subscribe { display: none !important; }
