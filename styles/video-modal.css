@@ -272,14 +272,14 @@
   background-clip: text;
 }
 
-/* Botão de fechar */
+/* Botão de fechar — maior e mais visível */
 .vmodal-close {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -294,11 +294,12 @@
 }
 
 .vmodal-close:hover {
-  background: rgba(220, 50, 50, 0.15);
-  border-color: rgba(220, 50, 50, 0.4);
+  background: rgba(220, 50, 50, 0.2);
+  border-color: rgba(220, 50, 50, 0.5);
   color: #ff6b6b;
-  transform: rotate(90deg) scale(1.1);
+  transform: rotate(90deg) scale(1.15);
 }
+
 
 /* ===== ÁREA DO VÍDEO ===== */
 .vmodal-video-wrap {
@@ -389,12 +390,19 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .vmodal-overlay { padding: 0; align-items: flex-end; }
+  /* Modal centralizado no mobile também (não mais bottom sheet) */
+  .vmodal-overlay {
+    padding: 16px;
+    align-items: center;
+  }
 
   .vmodal-card {
-    border-radius: 20px 20px 0 0;
+    border-radius: 20px;
     max-width: 100%;
-    transform: translateY(100%) scale(1);
+    max-height: 90svh;
+    overflow-y: auto;
+    /* Entrada de baixo para cima mas centralizado */
+    transform: translateY(40px) scale(0.95);
   }
 
   .vmodal-overlay.open .vmodal-card {
@@ -411,6 +419,8 @@
 }
 
 @media (max-width: 480px) {
-  .vmodal-header { padding: 16px; }
-  .vmodal-footer { padding: 14px 16px; }
+  .vmodal-overlay { padding: 12px; }
+  .vmodal-header { padding: 14px 16px; }
+  .vmodal-footer { padding: 12px 16px; }
 }
+

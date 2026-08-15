@@ -477,8 +477,8 @@
               <input type="text" id="p-title" placeholder="Título da matéria..." required>
             </div>
             <div class="form-field">
-              <label>Resumo</label>
-              <textarea id="p-summary" placeholder="Descrição breve..."></textarea>
+              <label>Resumo / Conteúdo</label>
+              <textarea id="p-summary" placeholder="Descrição ou conteúdo da reportagem..."></textarea>
             </div>
             <div class="form-field">
               <label>Categoria</label>
@@ -496,6 +496,18 @@
             <div class="form-field">
               <label>URL da Imagem</label>
               <input type="url" id="p-image" placeholder="https://" inputmode="url">
+            </div>
+            <!-- Campos de responsabilidade -->
+            <div style="border-top:1px solid rgba(255,255,255,0.07);margin:16px 0 20px;padding-top:20px;">
+              <div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Responsabilidade</div>
+              <div class="form-field">
+                <label>📢 Responsável pela Reportagem</label>
+                <input type="text" id="p-author" placeholder="Nome do aluno/equipe responsável...">
+              </div>
+              <div class="form-field">
+                <label>✅ Oficializado por</label>
+                <input type="text" id="p-approved-by" placeholder="Nome do professor/coordenador que aprovou...">
+              </div>
             </div>
             <button type="submit" class="btn-publish" id="publish-btn">Publicar</button>
           </form>
@@ -682,9 +694,11 @@
       }
       el.innerHTML = `
         <table>
-          <thead><tr><th>Título</th><th>Tipo</th><th>Ação</th></tr></thead>
+          <thead><tr><th>Título</th><th>Responsável</th><th>Oficializado</th><th>Tipo</th><th>Ação</th></tr></thead>
           <tbody>${all.map(a => `<tr>
             <td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.title}</td>
+            <td style="font-size:0.78rem;color:var(--muted)">${a.author || '<span style="opacity:0.4">—</span>'}</td>
+            <td style="font-size:0.78rem;color:var(--muted)">${a.approvedBy || '<span style="opacity:0.4">—</span>'}</td>
             <td>${a.isFeatured ? '<span class="badge badge-yellow">Destaque</span>' : '<span class="badge badge-gray">Notícia</span>'}</td>
             <td><button class="btn-danger" onclick="deleteArticle(${a.id})">Excluir</button></td>
           </tr>`).join('')}
@@ -767,6 +781,8 @@
           category: document.getElementById('p-category').value,
           image: document.getElementById('p-image').value,
           isFeatured: publishType === 'featured',
+          authorName: document.getElementById('p-author').value.trim() || null,
+          approvedBy: document.getElementById('p-approved-by').value.trim() || null,
         })
       });
       msg.className = 'form-msg success';

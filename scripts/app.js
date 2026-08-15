@@ -232,19 +232,36 @@ document.addEventListener('DOMContentLoaded', () => {
     feedHeroCard.style.display = 'flex';
     feedHeroCard.style.backgroundImage = hero.image ? `url('${hero.image}')` : '';
     feedHeroCard.style.backgroundColor = !hero.image ? 'var(--primary)' : '';
+    // Preview: max 200 chars do summary
+    const heroPreview = (hero.summary || '').length > 200
+      ? hero.summary.substring(0, 200) + '...'
+      : (hero.summary || '');
     feedHeroCard.innerHTML = `
       <div class="feed-hero-overlay"></div>
       <div class="feed-hero-body">
         ${hero.isFeatured ? '<span class="tag">DESTAQUE</span>' : (hero.category ? `<span class="tag">${hero.category}</span>` : '')}
         <h2>${hero.title}</h2>
-        <p>${hero.summary || ''}</p>
+        ${heroPreview ? `<p>${heroPreview}</p>` : ''}
+        <button class="news-card-read-more" style="color:var(--gold-light);margin-top:12px;" data-article-id="${hero.id}">
+          Ler mais
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
       </div>
     `;
+    // Tornar hero card clicável
+    feedHeroCard.addEventListener('click', (e) => {
+      if (!e.target.closest('.news-card-read-more')) return;
+      openArticleModal(hero);
+    });
 
     // Resto vira cards no grid
     filtered.slice(1).forEach((post, i) => {
       const card = document.createElement('article');
       card.className = 'news-card glass reveal delay-' + ((i % 5) + 1);
+      // Preview: max 120 chars
+      const preview = (post.summary || '').length > 120
+        ? post.summary.substring(0, 120) + '...'
+        : (post.summary || '');
       card.innerHTML = `
         <div class="news-card-img">
           ${post.image
@@ -254,20 +271,19 @@ document.addEventListener('DOMContentLoaded', () => {
           ${post.isFeatured ? '<span class="news-card-category" style="background:var(--gold);color:var(--primary-dark);">DESTAQUE</span>' : ''}
         </div>
         <div class="news-card-body">
-          <h3><a href="#">${post.title}</a></h3>
-          <p>${post.summary || ''}</p>
+          <h3>${post.title}</h3>
+          ${preview ? `<p class="news-card-preview">${preview}</p>` : ''}
           <div class="news-card-footer">
             <span class="news-date">${post.date || ''}</span>
-            <div class="stars-group" data-id="${post.id}" data-type="news">
-              <button class="star-btn" data-value="1">★</button>
-              <button class="star-btn" data-value="2">★</button>
-              <button class="star-btn" data-value="3">★</button>
-              <button class="star-btn" data-value="4">★</button>
-              <button class="star-btn" data-value="5">★</button>
-            </div>
+            <button class="news-card-read-more" data-article-id="${post.id}">
+              Ler mais
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
           </div>
         </div>
       `;
+      // Clique no card abre o artigo
+      card.addEventListener('click', () => openArticleModal(post));
       feedGrid.appendChild(card);
     });
 
@@ -283,27 +299,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('testimonials-grid');
     if (!grid) return;
     try {
-      // Busca apenas as avaliacoes aprovadas e referentes ao site (is_site=true)
       const res = await fetch('/api/ratings?is_site=true&limit=6');
       const ratings = await res.json();
       if (!ratings.length) {
-        grid.innerHTML = '<div class="testim-empty">Ainda não há avaliações disponíveis.</div>';
+        grid.innerHTML = '<div class="testim-empty">Ainda n\u00e3o h\u00e1 avalia\u00e7\u00f5es dispon\u00edveis.</div>';
         return;
       }
-      grid.innerHTML = ratings.map(r => `
-        <div class="testimonial-card">
-          <div class="testim-header">
-            <div class="testim-name">${r.name}</div>
-            <div class="stars" style="color:var(--gold);font-size:0.9rem;">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+      grid.innerHTML = ratings.map(r => {
+        const initial = (r.name || 'A')[0].toUpperCase();
+        const starsStr = '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars);
+        return `
+          <div class="testimonial-card">
+            <div class="testim-header">
+              <div class="testim-name-wrap">
+                <div class="testim-avatar">${initial}</div>
+                <div class="testim-name">${r.name}</div>
+              </div>
+              <span class="testim-stars">${starsStr}</span>
+            </div>
+            ${r.comment ? `<div class="testim-comment">&ldquo;${r.comment}&rdquo;</div>` : ''}
+            <div class="testim-date">${r.date}</div>
           </div>
-          ${r.comment ? `<div class="testim-comment">"${r.comment}"</div>` : ''}
-          <div class="testim-date">${r.date}</div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     } catch (err) {
-      grid.innerHTML = '<div class="testim-empty" style="color:var(--danger)">Erro ao carregar avaliações.</div>';
+      grid.innerHTML = '<div class="testim-empty" style="color:#ff6b6b">Erro ao carregar avalia\u00e7\u00f5es.</div>';
     }
   }
+
+  // ========== MODAL DE ARTIGO ==========
+  const articleModal    = document.getElementById('article-modal');
+  const articleModalClose = document.getElementById('article-modal-close');
+  const articleModalBack  = document.getElementById('article-modal-backdrop');
+
+  function openArticleModal(post) {
+    if (!articleModal) return;
+    // Preenche o conteúdo
+    const img = document.getElementById('article-modal-img');
+    if (post.image) {
+      img.src = post.image;
+      img.alt = post.title;
+      img.style.display = 'block';
+    } else {
+      img.style.display = 'none';
+    }
+    document.getElementById('article-modal-title').textContent = post.title || '';
+    document.getElementById('article-modal-category').textContent = post.category || '';
+    document.getElementById('article-modal-date').textContent = post.date || '';
+
+    // Autor
+    const authorEl = document.getElementById('article-modal-author');
+    if (post.author) {
+      const init = post.author[0].toUpperCase();
+      authorEl.innerHTML = `
+        <div class="article-modal-author-avatar">${init}</div>
+        <span>Por <strong>${post.author}</strong></span>
+      `;
+      authorEl.style.display = 'flex';
+    } else {
+      authorEl.style.display = 'none';
+    }
+
+    // Conteúdo completo
+    document.getElementById('article-modal-content').textContent = post.summary || 'Sem conteúdo disponível.';
+
+    // Abre modal
+    articleModal.setAttribute('aria-hidden', 'false');
+    articleModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    articleModalClose.focus();
+  }
+
+  function closeArticleModal() {
+    if (!articleModal) return;
+    articleModal.classList.remove('open');
+    articleModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (articleModalClose) articleModalClose.addEventListener('click', closeArticleModal);
+  if (articleModalBack)  articleModalBack.addEventListener('click', closeArticleModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && articleModal && articleModal.classList.contains('open')) closeArticleModal();
+  });
+
 
   // Category filter
   document.querySelectorAll('.filter-btn').forEach(btn => {

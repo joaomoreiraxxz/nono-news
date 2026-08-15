@@ -138,10 +138,11 @@ img, video, iframe, embed, object {
   }
   .btn-video-escola { width: 100% !important; }
 
-  /* ----- CARROSSEL ----- */
-  .escola-carousel { height: 230px !important; }
-  .carousel-caption { padding: 18px 16px !important; }
-  .carousel-btn { width: 34px !important; height: 34px !important; }
+  /* ----- CARROSSEL — altura maior para não cortar imagens ----- */
+  .escola-carousel { height: 320px !important; }
+  .carousel-caption { padding: 24px 20px 22px !important; }
+  .carousel-btn { width: 38px !important; height: 38px !important; }
+
 
   /* ----- INFO CARDS — 2 colunas compactas ----- */
   .escola-info-row {
@@ -213,19 +214,22 @@ img, video, iframe, embed, object {
   }
 
   /* ====================================
-     VIDEO MODAL — BOTTOM SHEET
+     VIDEO MODAL — CENTRALIZADO NO MOBILE
      ==================================== */
-  .vmodal-overlay { padding: 0 !important; align-items: flex-end !important; }
+  /* Override do mobile.css: centralizado, não mais bottom sheet */
+  .vmodal-overlay {
+    padding: 16px !important;
+    align-items: center !important;
+  }
   .vmodal-card {
-    border-radius: 20px 20px 0 0 !important;
+    border-radius: 20px !important;
     max-width: 100% !important;
-    max-height: 92svh !important;
-    transform: translateY(100%) scale(1) !important;
+    max-height: 90svh !important;
+    transform: translateY(40px) scale(0.95) !important;
   }
   .vmodal-overlay.open .vmodal-card {
     transform: translateY(0) scale(1) !important;
   }
-  .vmodal-header { padding: 14px 16px !important; }
   .vmodal-video-inner {
     position: relative !important;
     width: 100% !important;

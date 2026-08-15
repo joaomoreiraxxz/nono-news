@@ -1,0 +1,138 @@
+/* ============================================================
+   WAVES.CSS — Separadores wave SVG entre seções
+   ============================================================ */
+
+/* ===== WAVE CONTAINERS ===== */
+.wave-divider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.wave-divider svg {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+
+/* Wave maior para transições principais */
+.wave-divider-lg svg {
+  height: 90px;
+}
+
+/* ===== WAVE 1 — Hero → Feed (dourada/azul escuro) ===== */
+.wave-hero-feed {
+  background: #000; /* cor do hero */
+  margin-top: -2px;
+}
+
+.wave-hero-feed svg {
+  fill: var(--bg);
+  height: 70px;
+}
+
+/* ===== WAVE 2 — Feed → Escola ===== */
+.wave-feed-escola {
+  background: var(--bg);
+  margin-top: -2px;
+}
+
+.wave-feed-escola svg {
+  fill: var(--bg-alt);
+  height: 70px;
+}
+
+/* ===== WAVE 3 — Escola → Rede ===== */
+.wave-escola-rede {
+  background: var(--bg-alt);
+  margin-top: -2px;
+}
+
+.wave-escola-rede svg {
+  fill: var(--bg);
+  height: 60px;
+}
+
+/* ===== WAVE 4 — Rede → Quem Somos ===== */
+.wave-rede-sobre {
+  background: var(--bg);
+  margin-top: -2px;
+}
+
+.wave-rede-sobre svg {
+  fill: var(--surface);
+  height: 60px;
+}
+
+/* ===== WAVE 5 — Quem Somos → Depoimentos ===== */
+.wave-sobre-dep {
+  background: var(--surface);
+  margin-top: -2px;
+}
+
+.wave-sobre-dep svg {
+  fill: var(--bg);
+  height: 60px;
+}
+
+/* ===== WAVE 6 — Avaliação → Mapa ===== */
+.wave-avaliar-mapa {
+  background: var(--bg-alt);
+  margin-top: -2px;
+}
+
+.wave-avaliar-mapa svg {
+  fill: var(--bg);
+  height: 50px;
+}
+
+/* ===== WAVES ANIMADAS (dupla camada para efeito fluido) ===== */
+.wave-animated {
+  position: relative;
+  height: 80px;
+  overflow: hidden;
+}
+
+.wave-animated .wave-layer {
+  position: absolute;
+  bottom: 0;
+  width: 200%;
+  height: 100%;
+  background-repeat: repeat-x;
+  animation: waveSlide 8s linear infinite;
+}
+
+.wave-animated .wave-layer-2 {
+  animation: waveSlide 12s linear 2s infinite reverse;
+  opacity: 0.5;
+}
+
+@keyframes waveSlide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== SEÇÃO DEPOIMENTOS — fundo ajustado ===== */
+#depoimentos {
+  background: var(--bg);
+}
+
+/* ===== SEÇÃO AVALIAÇÃO — fundo mais rico ===== */
+#avaliar {
+  background: var(--bg-alt);
+}
+
+/* ===== SEÇÃO MAPA ===== */
+#mapa {
+  background: var(--bg);
+}
+
+/* ===== RESPONSIVO — waves menores no mobile ===== */
+@media (max-width: 768px) {
+  .wave-divider svg { height: 40px !important; }
+  .wave-divider-lg svg { height: 55px !important; }
+  .wave-animated { height: 50px; }
+}

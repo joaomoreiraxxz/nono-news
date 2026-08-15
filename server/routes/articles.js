@@ -43,7 +43,8 @@ router.get('/', (req, res) => {
       category: row.category,
       image: row.image_url,
       isFeatured: false,
-      author: row.author_name,
+      author: row.author_name || row.author_name_col || null,
+      approvedBy: row.approved_by || null,
       date: formatDate(row.created_at),
     }));
 
@@ -72,7 +73,8 @@ router.get('/featured', (req, res) => {
       category: row.category,
       image: row.image_url,
       isFeatured: true,
-      author: row.author_name,
+      author: row.author_name || null,
+      approvedBy: row.approved_by || null,
       date: formatDate(row.created_at),
     }));
 
@@ -103,7 +105,8 @@ router.get('/:id', (req, res) => {
       category: row.category,
       image: row.image_url,
       isFeatured: !!row.is_featured,
-      author: row.author_name,
+      author: row.author_name || null,
+      approvedBy: row.approved_by || null,
       date: formatDate(row.created_at),
     });
   } catch (err) {
@@ -115,22 +118,24 @@ router.get('/:id', (req, res) => {
 // ========== POST /api/articles ==========
 router.post('/', authMiddleware, (req, res) => {
   try {
-    const { title, summary, category, image, isFeatured } = req.body;
+    const { title, summary, category, image, isFeatured, authorName, approvedBy } = req.body;
 
     if (!title || title.trim().length === 0) {
       return res.status(400).json({ error: 'Título é obrigatório.' });
     }
 
     const result = db.prepare(
-      `INSERT INTO articles (title, summary, category, image_url, is_featured, author_id)
-       VALUES (?, ?, ?, ?, ?, ?)`
+      `INSERT INTO articles (title, summary, category, image_url, is_featured, author_id, author_name, approved_by)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
     ).run(
       title.trim(),
       summary || null,
       category || null,
       image || null,
       isFeatured ? 1 : 0,
-      req.user.id
+      req.user.id,
+      authorName || null,
+      approvedBy || null
     );
 
     const row = db.prepare('SELECT * FROM articles WHERE id = ?').get(result.lastInsertRowid);
@@ -146,6 +151,8 @@ router.post('/', authMiddleware, (req, res) => {
         category: row.category,
         image: row.image_url,
         isFeatured: !!row.is_featured,
+        authorName: row.author_name,
+        approvedBy: row.approved_by,
         date: formatDate(row.created_at),
       },
     });

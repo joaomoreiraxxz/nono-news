@@ -733,44 +733,87 @@
   margin-top: 40px;
 }
 .testimonial-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  padding: 24px;
-  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 28px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  transition: transform 0.3s ease;
+  gap: 14px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.testimonial-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  font-size: 5rem;
+  color: rgba(212,168,67,0.08);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
 }
 .testimonial-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(220, 172, 85, 0.4);
+  transform: translateY(-6px);
+  border-color: rgba(212, 168, 67, 0.25);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(212,168,67,0.08);
 }
 .testim-header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.testim-name-wrap {
+  display: flex;
   align-items: center;
+  gap: 10px;
+}
+.testim-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 .testim-name {
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
   color: var(--text);
+  line-height: 1.2;
 }
 .testim-date {
-  font-size: 0.8rem;
-  color: var(--muted);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.testim-stars {
+  color: var(--gold);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
 }
 .testim-comment {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.75);
-  line-height: 1.5;
+  font-size: 0.93rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.65;
   font-style: italic;
 }
 .testim-empty {
   text-align: center;
-  color: var(--muted);
-  padding: 40px;
-  background: var(--card-bg);
-  border-radius: 16px;
+  color: var(--text-secondary);
+  padding: 60px 40px;
+  background: var(--surface);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.06);
   grid-column: 1 / -1;
+  font-size: 0.95rem;
 }

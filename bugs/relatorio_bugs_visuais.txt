@@ -1,0 +1,22 @@
+# Relatório de Bugs Visuais (Frontend)
+
+## Status da Inspeção Automática
+A inspeção automática visual falhou. O subagente de navegação (browser_subagent) não pôde ser iniciado devido a um erro 404 ao tentar baixar o driver do Playwright 1.57.0 para Windows. Sem o navegador renderizando o site, não é possível detectar com precisão bugs puramente visuais (como problemas de espaçamento, responsividade quebrando em resoluções específicas, ou contrastes não previstos no código).
+
+## Análise Estática de Código (CSS e HTML)
+Foi realizada uma varredura estática no HTML (`index.html`, `admin.html`) e nos arquivos CSS (`main.css`, `mobile.css`, `redesign.css`, `patterns.css`, `video-modal.css`).
+
+**Observações:**
+1. **Marquee Ticker (index.html):** Há repetição de spans dentro de `.ticker-inner` (linhas 131-135 e 136-140). Isso não é um bug, é a implementação padrão para animações de rolagem infinita.
+2. **Histórico Recente de Correções:** O arquivo `docs/manutencao_melhorias_visuais.md` indica que vários bugs visuais graves (como o grid sobrepondo o hero, logo gigante no loader e fotos escuras) já foram corrigidos na versão anterior.
+3. **Z-index e Overflows:** As propriedades `z-index` e `overflow` parecem estar organizadas corretamente nos modais e elementos sobrepostos (`mobile.css` usa `!important` para forçar `overflow-x: hidden` e evitar barra de rolagem horizontal).
+4. **Mobile Nav Ghost:** No mobile.css há proteções como `visibility: hidden !important; pointer-events: none !important;` na navbar para evitar que a div invisível intercepte cliques (um bug corrigido anteriormente e que foi mantido resolvido).
+
+## Conclusão e Próximos Passos
+No momento, a análise estática não revelou bugs estruturais evidentes no frontend.
+
+**Recomendação:**
+Como a automação do navegador está indisponível, por favor:
+1. Navegue manualmente pelo site (`npm run dev`).
+2. Se encontrar algum bug visual (ex: texto ilegível, sobreposição em telas específicas), tire um print ou descreva o problema.
+3. Posso ajudar a corrigir o CSS ou HTML de qualquer bug que você me apontar.

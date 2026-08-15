@@ -36,11 +36,31 @@ function migrate() {
       image_url   TEXT,
       is_featured INTEGER DEFAULT 0,
       author_id   INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      author_name TEXT,
+      approved_by TEXT,
       created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `);
   console.log('✅ Tabela "articles" criada/verificada.');
+
+  // Adiciona colunas novas em bancos já existentes (ALTER TABLE seguro)
+  const addColumnSafe = (table, column, definition) => {
+    try {
+      db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+      console.log(`✅ Coluna "${column}" adicionada em "${table}".`);
+    } catch (e) {
+      if (e.message && e.message.includes('duplicate column name')) {
+        console.log(`ℹ️  Coluna "${column}" já existe em "${table}".`);
+      } else {
+        throw e;
+      }
+    }
+  };
+
+  addColumnSafe('articles', 'author_name', 'TEXT');
+  addColumnSafe('articles', 'approved_by', 'TEXT');
+  addColumnSafe('ratings', 'is_approved', 'INTEGER DEFAULT 0');
 
   // ==========================================
   // TABELA: ratings

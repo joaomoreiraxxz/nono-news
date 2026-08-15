@@ -14,21 +14,45 @@
   <link rel="stylesheet" href="/styles/extras.css">
   <link rel="stylesheet" href="/styles/redesign.css">
   <link rel="stylesheet" href="/styles/patterns.css">
+  <link rel="stylesheet" href="/styles/waves.css">
   <link rel="stylesheet" href="/styles/video-modal.css">
+  <link rel="stylesheet" href="/styles/article-modal.css">
   <link rel="stylesheet" href="/styles/mobile.css">
 </head>
+
 <body>
 
   <!-- ========== LOADER ========== -->
   <div id="loader">
-    <!-- Cantos decorativos dourados -->
-    <div class="loader-corner loader-corner-tl"></div>
-    <div class="loader-corner loader-corner-tr"></div>
-    <div class="loader-corner loader-corner-bl"></div>
-    <div class="loader-corner loader-corner-br"></div>
 
-    <!-- Scan line dourada horizontal -->
-    <div class="loader-scan"></div>
+    <!-- Waves fluidas na base — 3 camadas com SVG inline (loop perfeito) -->
+    <div class="loader-scan">
+
+      <!-- Wave 1: dourada suave, fundo -->
+      <div class="loader-wave-1">
+        <svg viewBox="0 0 2880 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M0,80 C240,140 480,20 720,80 C960,140 1200,20 1440,80 C1680,140 1920,20 2160,80 C2400,140 2640,20 2880,80 L2880,160 L0,160 Z"
+            fill="rgba(212,168,67,0.12)"/>
+        </svg>
+      </div>
+
+      <!-- Wave 2: azul profundo, meio -->
+      <div class="loader-wave-2">
+        <svg viewBox="0 0 2880 130" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M0,65 C360,10 720,120 1080,65 C1260,38 1440,100 1440,65 C1440,30 1620,10 1800,65 C2040,120 2400,20 2520,65 C2640,100 2760,38 2880,65 L2880,130 L0,130 Z"
+            fill="rgba(0,77,153,0.18)"/>
+        </svg>
+      </div>
+
+      <!-- Wave 3: dourada intensa, frente -->
+      <div class="loader-wave-3">
+        <svg viewBox="0 0 2880 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M0,50 C180,10 360,90 540,50 C720,10 900,90 1080,50 C1260,10 1440,90 1440,50 C1440,10 1620,90 1800,50 C1980,10 2160,90 2340,50 C2520,10 2700,90 2880,50 L2880,100 L0,100 Z"
+            fill="rgba(212,168,67,0.22)"/>
+        </svg>
+      </div>
+
+    </div>
 
     <!-- Conteúdo central -->
     <div class="loader-logo-wrap">
@@ -44,6 +68,7 @@
     <!-- Barra de progresso na base -->
     <div class="loader-bar"><div class="loader-bar-fill"></div></div>
   </div>
+
 
   <!-- ========== NAVBAR ========== -->
   <nav class="navbar" id="navbar">
@@ -123,7 +148,15 @@
     </div>
   </section>
 
-  <!-- ========== BREAKING NEWS TICKER ========== -->
+  <!-- ===== WAVE: Hero → Feed ===== -->
+  <div class="wave-divider wave-hero-feed" aria-hidden="true">
+    <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 C360,70 1080,0 1440,60 L1440,70 L0,70 Z" />
+    </svg>
+  </div>
+
+  <!-- ========== FEED DE NOTÍCIAS ========== -->
+
   <div class="ticker-bar">
     <div class="ticker-label">AO VIVO</div>
     <div class="ticker-track">
@@ -171,7 +204,15 @@
     </div>
   </section>
 
+  <!-- ===== WAVE: Feed → Escola ===== -->
+  <div class="wave-divider wave-feed-escola" aria-hidden="true">
+    <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,70 C480,0 960,70 1440,10 L1440,70 L0,70 Z" />
+    </svg>
+  </div>
+
   <!-- ========== A ESCOLA — EDITORIAL COM FOTOS ========== -->
+
   <section id="escola" class="section-escola">
     <!-- Faixa de título editorial -->
     <div class="escola-header reveal">
@@ -292,7 +333,15 @@
     </div>
   </section>
 
+  <!-- ===== WAVE: Escola → Rede ===== -->
+  <div class="wave-divider wave-escola-rede" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" />
+    </svg>
+  </div>
+
   <!-- ========== REDE ADVENTISTA — IMPACTO GLOBAL ========== -->
+
   <section id="rede" class="section-rede">
     <div class="container">
       <div class="rede-layout">
@@ -333,7 +382,15 @@
     </div>
   </section>
 
+  <!-- ===== WAVE: Rede → Quem Somos ===== -->
+  <div class="wave-divider wave-rede-sobre" aria-hidden="true">
+    <svg viewBox="0 0 1440 65" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,65 C360,20 720,65 1080,25 C1260,10 1380,50 1440,40 L1440,65 L0,65 Z" />
+    </svg>
+  </div>
+
   <!-- ========== QUEM SOMOS ========== -->
+
   <section id="sobre" class="section">
     <div class="container">
       <div class="section-header reveal">
@@ -374,7 +431,15 @@
     </div>
   </section>
 
+  <!-- ===== WAVE: Quem Somos → Depoimentos ===== -->
+  <div class="wave-divider wave-sobre-dep" aria-hidden="true">
+    <svg viewBox="0 0 1440 65" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,32 C320,65 640,0 960,45 C1200,75 1380,20 1440,35 L1440,65 L0,65 Z" />
+    </svg>
+  </div>
+
   <!-- ========== DEPOIMENTOS / AVALIAÇÕES ========== -->
+
   <section id="depoimentos" class="section">
     <div class="container">
       <div class="section-header reveal">
@@ -431,7 +496,15 @@
     </div>
   </section>
 
+  <!-- ===== WAVE: Avaliação → Mapa ===== -->
+  <div class="wave-divider wave-avaliar-mapa" aria-hidden="true">
+    <svg viewBox="0 0 1440 55" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,10 C480,55 960,0 1440,35 L1440,55 L0,55 Z" />
+    </svg>
+  </div>
+
   <!-- ========== LOCALIZAÇÃO ========== -->
+
   <section id="mapa" class="section section-dark">
     <div class="container">
       <div class="section-header reveal">
@@ -547,6 +620,31 @@
         </a>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ========== MODAL LEITURA DE ARTIGO ========== -->
+  <div id="article-modal" class="article-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="article-modal-backdrop" id="article-modal-backdrop"></div>
+    <div class="article-modal-card" id="article-modal-card">
+      <div class="article-modal-header">
+        <div class="article-modal-meta">
+          <span class="article-modal-category" id="article-modal-category"></span>
+          <span class="article-modal-date" id="article-modal-date"></span>
+        </div>
+        <button class="article-modal-close" id="article-modal-close" aria-label="Fechar artigo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="article-modal-body" id="article-modal-body">
+        <img src="" alt="" class="article-modal-img" id="article-modal-img" style="display:none">
+        <h2 class="article-modal-title" id="article-modal-title"></h2>
+        <div class="article-modal-author" id="article-modal-author"></div>
+        <div class="article-modal-content" id="article-modal-content"></div>
+      </div>
     </div>
   </div>
 
