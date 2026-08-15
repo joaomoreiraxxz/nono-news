@@ -1,0 +1,5 @@
+- O que foi feito: Implementacao de sistema de aprovacao previa para as avaliacoes publicas e remocao completa de emojis do sistema, visando uma aparencia mais formal e maior controle do conteudo exibido.
+- Arquivos mudados: server/index.js, server/routes/ratings.js, admin.html, index.html.
+- Código novo: 
+  - Backend: Alteracao da tabela do banco de dados ratings adicionando a coluna is_approved. Modificacao na logica das rotas para GET /api/ratings (apenas aprovadas) e criacao de GET /api/ratings/admin (todas as avaliacoes). Criacao de PUT /api/ratings/:id/approve para alterar o status para aprovado no DB.
+  - Frontend: Remocao de tags com emojis de index.html e formatacao mais sobria em todo o admin.html. Adicionada interface com status "Pendente" ou "Aprovado" e botao extra de "Aprovar" na tabela de avaliacoes do admin.
