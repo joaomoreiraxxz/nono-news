@@ -14,6 +14,10 @@ import authRoutes from './routes/auth.js';
 import articlesRoutes from './routes/articles.js';
 import ratingsRoutes from './routes/ratings.js';
 
+// Banco de dados — auto migração
+import db from './db/pool.js';
+import bcrypt from 'bcrypt';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -74,7 +78,7 @@ if (isProd) {
   app.use(express.static(distPath));
 
   // SPA fallback — qualquer rota que não seja /api vai pro index.html
-  app.get('*', (req, res) => {
+  app.get('{*path}', (req, res) => {
     if (!req.path.startsWith('/api')) {
       res.sendFile(join(distPath, 'index.html'));
     }
@@ -82,20 +86,45 @@ if (isProd) {
 }
 
 // ==========================================
+// Auto-migração (cria tabelas + admin ao iniciar)
+// ==========================================
+function autoMigrate() {
+  try {
+    db.exec(`CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL,
+      email TEXT NOT NULL UNIQUE, password TEXT NOT NULL,
+      role TEXT DEFAULT 'admin', created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
+    db.exec(`CREATE TABLE IF NOT EXISTS articles (
+      id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL,
+      summary TEXT, category TEXT, image_url TEXT,
+      is_featured INTEGER DEFAULT 0, author_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
+    db.exec(`CREATE TABLE IF NOT EXISTS ratings (
+      id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL,
+      comment TEXT, stars INTEGER NOT NULL CHECK (stars >= 1 AND stars <= 5),
+      article_id INTEGER REFERENCES articles(id) ON DELETE CASCADE,
+      is_site INTEGER DEFAULT 0, created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
+    const existing = db.prepare('SELECT id FROM users WHERE email = ?').get('admin@escola.com');
+    if (!existing) {
+      const hash = bcrypt.hashSync('nono2026', 10);
+      db.prepare('INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)').run('Administrador', 'admin@escola.com', hash, 'admin');
+      console.log('✅ Admin criado: admin@escola.com / nono2026');
+    }
+    console.log('✅ Banco de dados OK');
+  } catch (err) {
+    console.error('❌ Erro na migração:', err.message);
+  }
+}
+autoMigrate();
+
+// ==========================================
 // Iniciar servidor
 // ==========================================
 app.listen(PORT, () => {
-  console.log(`
-╔═══════════════════════════════════════════════╗
-║                                               ║
-║   🗞️  Nono News — Backend Ativo               ║
-║                                               ║
-║   📡  API:   http://localhost:${PORT}/api       ║
-║   💚  Health: http://localhost:${PORT}/api/health║
-║   🌐  Env:   ${isProd ? 'PRODUCTION' : 'DEVELOPMENT'}                   ║
-║                                               ║
-╚═══════════════════════════════════════════════╝
-  `);
+  console.log(`🗞️ Nono News rodando na porta ${PORT} (${isProd ? 'PRODUÇÃO' : 'DEV'})`);
 });
 
 export default app;
