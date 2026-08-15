@@ -114,6 +114,7 @@ function autoMigrate() {
       id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL,
       summary TEXT, category TEXT, image_url TEXT,
       is_featured INTEGER DEFAULT 0, author_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      author_name TEXT, approved_by TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
     db.exec(`CREATE TABLE IF NOT EXISTS ratings (
@@ -122,13 +123,17 @@ function autoMigrate() {
       article_id INTEGER REFERENCES articles(id) ON DELETE CASCADE,
       is_site INTEGER DEFAULT 0, created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
-    
-    // Migracao para adicionar coluna is_approved se nao existir
-    try {
-      db.prepare('ALTER TABLE ratings ADD COLUMN is_approved INTEGER DEFAULT 0').run();
-    } catch (e) {
-      // Ignora erro se a coluna ja existe
-    }
+
+    // Helper: adiciona coluna sem quebrar se já existir
+    const addCol = (table, col, def) => {
+      try { db.prepare(`ALTER TABLE ${table} ADD COLUMN ${col} ${def}`).run(); }
+      catch (e) { /* coluna já existe, ignora */ }
+    };
+
+    // Colunas novas — seguro rodar mesmo em banco existente
+    addCol('ratings',  'is_approved', 'INTEGER DEFAULT 0');
+    addCol('articles', 'author_name', 'TEXT');
+    addCol('articles', 'approved_by', 'TEXT');
 
     const existing = db.prepare('SELECT id FROM users WHERE email = ?').get('admin@escola.com');
     if (!existing) {
