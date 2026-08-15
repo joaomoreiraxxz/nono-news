@@ -73,13 +73,27 @@ app.get('/api/health', (req, res) => {
 // Em dev, o Vite serve os arquivos e faz proxy das /api
 // ==========================================
 if (isProd) {
-  // Em produção, serve o build do Vite (pasta dist/)
   const distPath = join(__dirname, '..', 'dist');
+
+  // Intercept root to serve admin.html if it's the admin subdomain
+  app.get('/', (req, res, next) => {
+    const host = req.hostname || '';
+    if (host.startsWith('admin.')) {
+      return res.sendFile(join(distPath, 'admin.html'));
+    }
+    next();
+  });
+
   app.use(express.static(distPath));
 
-  // SPA fallback — qualquer rota que não seja /api vai pro index.html
-  app.get('{*path}', (req, res) => {
-    if (!req.path.startsWith('/api')) {
+  // SPA fallback — roteia corretamente dependendo do subdomínio
+  app.get('*', (req, res) => {
+    if (req.path.startsWith('/api')) return res.status(404).json({ error: 'Not found' });
+    
+    const host = req.hostname || '';
+    if (host.startsWith('admin.')) {
+      res.sendFile(join(distPath, 'admin.html'));
+    } else {
       res.sendFile(join(distPath, 'index.html'));
     }
   });

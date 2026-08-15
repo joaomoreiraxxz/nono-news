@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Login — Nono News</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; }
+
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --surface2: #1a2235;
+      --border: rgba(255,255,255,0.08);
+      --accent: #3b82f6;
+      --accent2: #6366f1;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --text: #f1f5f9;
+      --muted: #64748b;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background:
+        radial-gradient(ellipse at 30% 40%, rgba(59,130,246,0.15), transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(99,102,241,0.1), transparent 50%),
+        var(--bg);
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      padding: 40px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+      animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+
+    .login-logo { width: 52px; height: 52px; margin: 0 auto 24px; display: block; }
+    .login-box h1 { font-size: 1.4rem; font-weight: 700; text-align: center; margin-bottom: 4px; }
+    .login-subtitle { text-align: center; color: var(--muted); font-size: 0.85rem; margin-bottom: 32px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .form-group input {
+      width: 100%; padding: 14px 16px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 12px; color: var(--text); font-size: 1rem;
+      font-family: inherit; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+    .form-group input::placeholder { color: var(--muted); }
+
+    .btn-primary {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; border: none; border-radius: 12px;
+      font-size: 1rem; font-weight: 600; font-family: inherit;
+      cursor: pointer; margin-top: 8px;
+      transition: opacity 0.2s, transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .btn-primary:active { opacity: 0.85; transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .login-msg { text-align: center; font-size: 0.85rem; margin-top: 12px; min-height: 20px; }
+    .login-msg.error { color: var(--danger); }
+    .login-msg.success { color: var(--success); }
+
+    @media (max-width: 768px) {
+      .login-box { padding: 32px 24px; border-radius: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-box">
+  <img src="/assets/logo.png" alt="Logo" class="login-logo">
+  <h1>Painel Admin</h1>
+  <p class="login-subtitle">Nono News — Escola Adventista</p>
+  <form id="login-form">
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="admin@escola.com" required autocomplete="email" inputmode="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+    </div>
+    <button type="submit" class="btn-primary" id="login-btn">Entrar no Painel</button>
+  </form>
+  <p class="login-msg" id="login-msg"></p>
+</div>
+
+<script>
+  const TOKEN_KEY = 'nono_admin_token';
+
+  function getToken() { return localStorage.getItem(TOKEN_KEY); }
+  function isLoggedIn() { return !!getToken(); }
+
+  if (isLoggedIn()) {
+    window.location.href = '/';
+  }
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('login-msg');
+    const btn = document.getElementById('login-btn');
+    btn.textContent = 'Entrando...'; btn.disabled = true;
+    try {
+      const data = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value
+        })
+      });
+      const json = await data.json();
+      if (!data.ok) throw new Error(json.error);
+      
+      localStorage.setItem(TOKEN_KEY, json.token);
+      
+      msg.className = 'login-msg success'; 
+      msg.textContent = '✓ Bem-vindo!';
+      
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 700);
+    } catch(err) {
+      msg.className = 'login-msg error'; 
+      msg.textContent = err.message || 'Credenciais inválidas.';
+      btn.textContent = 'Entrar no Painel'; 
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>

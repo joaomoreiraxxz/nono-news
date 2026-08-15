@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
     footerLogo.style.cursor = 'pointer';
     footerLogo.addEventListener('click', () => {
       adminClicks++;
-      if (adminClicks >= 5) { adminClicks = 0; window.location.href = '/admin.html'; }
+      if (adminClicks >= 5) { adminClicks = 0; window.location.href = 'https://admin.bytecrm.online/'; }
     });
   }
 
