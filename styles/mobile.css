@@ -1,215 +1,349 @@
 /* ============================================================
-   MOBILE.CSS — Layout responsivo completo para celular
-   Corrige: hero, navbar, seções empilhadas, video modal, tudo
+   MOBILE.CSS — Reset completo + Layout mobile premium
    ============================================================ */
 
-/* ===== BASE MOBILE (≤768px) ===== */
+/* ===== RESET ANTI-OVERFLOW GLOBAL ===== */
+*, *::before, *::after {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+}
+
+/* ===== MOBILE (≤768px) ===== */
 @media (max-width: 768px) {
 
+  /* ----- VARIÁVEIS MOBILE ----- */
+  :root {
+    --section-gap: 60px;
+    --nav-height: 64px;
+  }
+
+  /* ----- CONTAINER MOBILE ----- */
+  .container {
+    width: 100% !important;
+    padding: 0 18px !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+  }
+
   /* ----- TOP BAR ----- */
-  .top-bar { display: none; }
+  .top-bar { display: none !important; }
 
   /* ----- NAVBAR ----- */
-  .navbar { padding: 0 16px; }
-  .nav-links { display: none; }
-  .nav-actions .btn-subscribe { display: none; }
-
-  /* Hamburger — mostra no mobile */
-  .nav-hamburger {
-    display: flex !important;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 36px;
-    height: 36px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
+  .navbar {
+    padding: 0 18px !important;
+    height: var(--nav-height) !important;
   }
-  .nav-hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: white;
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
+  .nav-links { display: none !important; }
+  .nav-actions .btn-subscribe,
+  .nav-actions .nav-subscribe { display: none !important; }
+  .nav-brand-text strong { font-size: 1rem !important; }
+  .nav-brand-text small { display: none; }
 
   /* ----- HERO ----- */
-  .cinehero { height: 100svh; min-height: 540px; }
-  .cinehero-content { padding: 0 20px; }
-  .ch-word { font-size: clamp(3rem, 14vw, 5rem) !important; letter-spacing: -2px !important; }
-  .cinehero-sub { font-size: 0.9rem; margin-bottom: 28px; }
+  .cinehero {
+    height: 100svh !important;
+    min-height: 500px !important;
+    width: 100% !important;
+  }
+  .cinehero-content {
+    padding: 0 18px !important;
+    width: 100% !important;
+  }
+  .cinehero-overlay {
+    background:
+      linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 100%),
+      linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%) !important;
+  }
+  .ch-word {
+    font-size: clamp(3.5rem, 16vw, 5.5rem) !important;
+    letter-spacing: -2px !important;
+  }
+  .cinehero-eyebrow { margin-bottom: 16px !important; }
+  .cinehero-eyebrow span { font-size: 0.72rem !important; letter-spacing: 2px !important; }
+  .cinehero-sub {
+    font-size: 0.88rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 28px !important;
+    max-width: 90% !important;
+  }
   .cinehero-actions {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    width: 100%;
-    max-width: 320px;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    max-width: 280px !important;
   }
   .btn-cine-primary, .btn-cine-ghost {
-    text-align: center;
-    justify-content: center;
-    padding: 14px 20px;
-    font-size: 0.88rem;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 14px 20px !important;
+    font-size: 0.85rem !important;
+    width: 100% !important;
   }
-  .cinehero-infotag { left: 20px; bottom: 20px; }
-  .cinehero-scroll { display: none; }
-
-  /* ----- ESCOLA HEADER ----- */
-  .escola-header { padding: 40px 0 30px; }
-  .escola-header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+  .cinehero-infotag {
+    left: 18px !important;
+    bottom: 18px !important;
+    font-size: 0.7rem !important;
   }
-  .escola-header-desc {
-    text-align: left;
-    font-size: 0.9rem;
-    max-width: 100%;
-  }
-  .escola-header-right {
-    align-items: flex-start;
-    width: 100%;
-  }
-  .btn-video-escola { width: 100%; max-width: 360px; }
-
-  /* ----- ESCOLA CAROUSEL ----- */
-  .escola-carousel { height: 260px; }
-  .carousel-caption { padding: 24px 20px 20px; }
-  .carousel-caption h3 { font-size: 1rem; }
-  .carousel-btn { width: 36px; height: 36px; }
-  .carousel-prev { left: 10px; }
-  .carousel-next { right: 10px; }
-
-  /* ----- ESCOLA INFO ROW ----- */
-  .escola-info-row {
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-  }
-  .escola-info-card { padding: 24px 18px; }
-  .escola-info-card h4 { font-size: 0.9rem; }
-  .escola-info-card p { font-size: 0.82rem; }
-
-  /* ----- SEÇÃO REDE ----- */
-  .section-rede { padding: 60px 0; }
-  .rede-layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .rede-logo { width: 140px; margin-bottom: 20px; }
-  .rede-stat-grid { grid-template-columns: 1fr 1fr; }
-  .rede-stat { padding: 24px 20px; }
-  .rede-stat-num { font-size: 2.2rem; }
+  .cinehero-scroll { display: none !important; }
 
   /* ----- TICKER ----- */
-  .ticker-label { padding: 0 12px; font-size: 0.65rem; }
-  .ticker-inner span { padding: 0 24px; font-size: 0.78rem; }
+  .ticker-bar { height: 36px !important; }
+  .ticker-label {
+    padding: 0 10px !important;
+    font-size: 0.62rem !important;
+    letter-spacing: 1px !important;
+  }
+  .ticker-inner span {
+    padding: 0 20px !important;
+    font-size: 0.75rem !important;
+  }
 
   /* ----- SEÇÕES GENÉRICAS ----- */
-  .section-wrapper,
-  .section-content,
-  section { padding-left: 0 !important; padding-right: 0 !important; }
+  .section {
+    padding: 56px 0 !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+  .section-header {
+    margin-bottom: 36px !important;
+    padding: 0 4px !important;
+  }
+  .section-header h2 { font-size: 1.5rem !important; }
+  .section-header p { font-size: 0.9rem !important; }
 
-  .container { padding: 0 16px !important; }
-
-  /* ----- FEED / GRID DE NOTÍCIAS ----- */
-  .news-grid {
+  /* ----- FEED DE NOTÍCIAS ----- */
+  .news-grid,
+  #feed-grid,
+  [id*="feed"] .grid,
+  .articles-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
-  .news-card { border-radius: 16px; }
-  .news-card-img { height: 200px; }
 
+  /* Cards de notícia */
+  .news-card,
+  .article-card,
+  .card {
+    width: 100% !important;
+    border-radius: 16px !important;
+  }
+  .news-card-img,
+  .card-img { height: 200px !important; }
+
+  /* Filtros de categoria */
+  .category-filter,
+  #category-filter {
+    display: flex !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 8px !important;
+    padding-bottom: 8px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  .category-filter::-webkit-scrollbar { display: none !important; }
+  .filter-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 8px 16px !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* ----- DESTAQUE / FEATURED ----- */
   .featured-grid,
-  .bento-grid {
+  .bento-grid,
+  .featured-layout {
     grid-template-columns: 1fr !important;
     grid-template-rows: auto !important;
+    gap: 16px !important;
   }
+  .bento-large,
+  .bento-tall,
+  .featured-main { grid-column: 1 !important; grid-row: auto !important; }
+  .featured-card-img,
+  .bento-img { height: 220px !important; }
+
+  /* ----- SEÇÃO ESCOLA ----- */
+  .escola-header {
+    padding: 36px 0 24px !important;
+    width: 100% !important;
+  }
+  .escola-header-inner {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+  .escola-header-inner .container { padding: 0 18px !important; }
+
+  /* Logo e título da escola */
+  .escola-header-left { width: 100% !important; }
+  .escola-header-left h2 { font-size: 1.5rem !important; }
+
+  .escola-header-desc {
+    text-align: left !important;
+    font-size: 0.88rem !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  .escola-header-right {
+    align-items: flex-start !important;
+    width: 100% !important;
+    gap: 14px !important;
+  }
+  .btn-video-escola {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Carrossel */
+  .escola-carousel {
+    height: 240px !important;
+    width: 100% !important;
+  }
+  .carousel-caption {
+    padding: 20px 18px 18px !important;
+  }
+  .carousel-caption h3 { font-size: 0.95rem !important; }
+  .carousel-tag { font-size: 0.65rem !important; }
+  .carousel-btn { width: 36px !important; height: 36px !important; }
+  .carousel-prev { left: 10px !important; }
+  .carousel-next { right: 10px !important; }
+
+  /* Info cards da escola — 2 colunas */
+  .escola-info-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1px !important;
+  }
+  .escola-info-card {
+    padding: 22px 16px !important;
+  }
+  .escola-info-card h4 { font-size: 0.88rem !important; }
+  .escola-info-card p { font-size: 0.8rem !important; }
+  .escola-info-icon { width: 40px !important; height: 40px !important; }
+
+  /* ----- SEÇÃO REDE ----- */
+  .section-rede { padding: 56px 0 !important; }
+  .rede-layout {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .rede-logo { width: 130px !important; margin-bottom: 18px !important; }
+  .rede-left h2 { font-size: 1.5rem !important; }
+  .rede-left p { font-size: 0.9rem !important; }
+  .rede-stat-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1px !important;
+  }
+  .rede-stat { padding: 22px 18px !important; }
+  .rede-stat-num { font-size: 2rem !important; }
+  .rede-stat-label { font-size: 0.75rem !important; }
+  .rede-fact { padding: 16px 18px !important; }
+  .rede-fact p { font-size: 0.85rem !important; }
 
   /* ----- AVALIAÇÕES ----- */
   .ratings-grid,
-  .reviews-grid {
+  .reviews-grid,
+  [id="avaliar"] .grid {
     grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .rating-form-wrap,
+  .review-form {
+    width: 100% !important;
+    padding: 24px 18px !important;
+  }
+
+  /* ----- SOBRE / QUEM SOMOS ----- */
+  .about-layout,
+  .team-grid,
+  .sobre-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
   }
 
   /* ----- FOOTER ----- */
   .footer-grid,
-  .footer-inner {
+  .footer-inner,
+  .footer-cols {
     grid-template-columns: 1fr !important;
     gap: 32px !important;
+    text-align: center !important;
   }
+  .footer-brand { align-items: center !important; }
+  .footer-links { align-items: center !important; }
 
   /* ----- VIDEO MODAL ----- */
   .vmodal-overlay {
-    padding: 0;
-    align-items: flex-end;
+    padding: 0 !important;
+    align-items: flex-end !important;
   }
   .vmodal-card {
-    border-radius: 20px 20px 0 0;
-    max-width: 100%;
-    max-height: 92svh;
-    overflow-y: auto;
+    border-radius: 20px 20px 0 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: 95svh !important;
+    overflow-y: auto !important;
+    transform: translateY(100%) scale(1) !important;
   }
-  .vmodal-header { padding: 14px 16px; gap: 10px; }
-  .vmodal-logo-wrap { width: 36px; height: 36px; }
-  .vmodal-title { font-size: 0.88rem; }
-  .vmodal-label { font-size: 0.65rem; letter-spacing: 1.5px; }
-  .vmodal-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 14px 16px;
-    gap: 10px;
+  .vmodal-overlay.open .vmodal-card {
+    transform: translateY(0) scale(1) !important;
   }
-  .vmodal-tags { gap: 6px; }
-  .vmodal-tag { font-size: 0.7rem; padding: 4px 10px; }
-
-  /* Iframe YouTube — 16:9 fixo */
+  .vmodal-header {
+    padding: 14px 16px !important;
+    gap: 10px !important;
+  }
+  .vmodal-logo-wrap { width: 36px !important; height: 36px !important; }
+  .vmodal-title { font-size: 0.85rem !important; }
+  .vmodal-label { font-size: 0.62rem !important; letter-spacing: 1.5px !important; }
+  .vmodal-close { width: 34px !important; height: 34px !important; }
+  .vmodal-video-wrap { width: 100% !important; }
   .vmodal-video-inner {
-    padding-bottom: 56.25% !important;
-    height: 0 !important;
     position: relative !important;
+    width: 100% !important;
+    height: 0 !important;
+    padding-bottom: 56.25% !important;
     overflow: hidden !important;
   }
   .vmodal-video-inner iframe {
     position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important; height: 100% !important;
     border: none !important;
   }
+  .vmodal-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 14px 16px !important;
+    gap: 10px !important;
+  }
+  .vmodal-tags { flex-wrap: wrap !important; gap: 6px !important; }
+  .vmodal-tag { font-size: 0.7rem !important; padding: 4px 10px !important; }
 }
 
-/* ===== EXTRA SMALL (≤480px) ===== */
-@media (max-width: 480px) {
-  .ch-word { font-size: clamp(2.5rem, 13vw, 4rem) !important; }
-  .cinehero-eyebrow span { font-size: 0.72rem; letter-spacing: 2px; }
-  .cinehero-sub { font-size: 0.85rem; }
-
-  .escola-carousel { height: 220px; }
-  .escola-info-row { grid-template-columns: 1fr; }
-
-  .vmodal-close { width: 32px; height: 32px; }
-  .vmodal-header-left { gap: 10px; }
-
-  .rede-stat-grid { grid-template-columns: 1fr 1fr; }
-  .rede-stat-num { font-size: 1.8rem; }
-  .rede-stat { padding: 18px 16px; }
+/* ===== EXTRA PEQUENO (≤420px) ===== */
+@media (max-width: 420px) {
+  .container { padding: 0 14px !important; }
+  .ch-word { font-size: clamp(3rem, 17vw, 4.5rem) !important; }
+  .cinehero-sub { font-size: 0.82rem !important; }
+  .escola-carousel { height: 200px !important; }
+  .escola-info-row { grid-template-columns: 1fr !important; }
+  .rede-stat-grid { grid-template-columns: 1fr 1fr !important; }
+  .rede-stat-num { font-size: 1.7rem !important; }
+  .section-header h2 { font-size: 1.35rem !important; }
 }
 
-/* ===== TABLET (769px – 1024px) ===== */
+/* ===== TABLET (769–1024px) ===== */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .cinehero-content { padding: 0 32px; }
-  .ch-word { font-size: clamp(4rem, 10vw, 7rem) !important; }
-  .rede-layout { grid-template-columns: 1fr; gap: 50px; }
-  .escola-info-row { grid-template-columns: repeat(2, 1fr); }
-  .escola-header-inner { flex-direction: column; gap: 24px; }
-  .escola-header-desc { text-align: left; max-width: 100%; }
-  .news-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .container { padding: 0 28px !important; }
+  .news-grid, #feed-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .escola-header-inner { flex-direction: column !important; gap: 24px !important; }
+  .escola-header-desc { text-align: left !important; max-width: 100% !important; }
+  .escola-info-row { grid-template-columns: repeat(2, 1fr) !important; }
+  .rede-layout { grid-template-columns: 1fr !important; gap: 48px !important; }
+  .ch-word { font-size: clamp(4rem, 11vw, 7rem) !important; }
 }
-
-/* ===== FIX YOUTUBE — garante autoplay só quando modal abre ===== */
-/* O iframe do YouTube não deve existir no DOM até o modal abrir */
-.vmodal-video-inner iframe[src=""] { display: none; }
