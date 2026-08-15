@@ -277,6 +277,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicia o carregamento
   loadFeedData();
+  loadTestimonials();
+
+  async function loadTestimonials() {
+    const grid = document.getElementById('testimonials-grid');
+    if (!grid) return;
+    try {
+      // Busca apenas as avaliacoes aprovadas e referentes ao site (is_site=true)
+      const res = await fetch('/api/ratings?is_site=true&limit=6');
+      const ratings = await res.json();
+      if (!ratings.length) {
+        grid.innerHTML = '<div class="testim-empty">Ainda não há avaliações disponíveis.</div>';
+        return;
+      }
+      grid.innerHTML = ratings.map(r => `
+        <div class="testimonial-card">
+          <div class="testim-header">
+            <div class="testim-name">${r.name}</div>
+            <div class="stars" style="color:var(--gold);font-size:0.9rem;">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+          </div>
+          ${r.comment ? `<div class="testim-comment">"${r.comment}"</div>` : ''}
+          <div class="testim-date">${r.date}</div>
+        </div>
+      `).join('');
+    } catch (err) {
+      grid.innerHTML = '<div class="testim-empty" style="color:var(--danger)">Erro ao carregar avaliações.</div>';
+    }
+  }
 
   // Category filter
   document.querySelectorAll('.filter-btn').forEach(btn => {
