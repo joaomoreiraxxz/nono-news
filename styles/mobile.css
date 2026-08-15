@@ -30,15 +30,34 @@ img, video, iframe, embed, object {
   /* ----- TOP BAR ----- */
   .top-bar { display: none !important; }
 
-  /* ----- NAVBAR — corrige menu mobile ----- */
+  /* ----- NAVBAR — menu mobile compacto ----- */
   .navbar { padding: 0 16px !important; }
-  .nav-links:not(.open) {
+  .hamburger { z-index: 1001 !important; }
+  .nav-links {
+    position: absolute !important;
+    top: 60px !important;
+    right: 16px !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 180px !important;
+    background: rgba(10, 15, 26, 0.97) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    transform: translateY(-10px) !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s, transform 0.3s !important;
     visibility: hidden !important;
     pointer-events: none !important;
   }
   .nav-links.open {
     visibility: visible !important;
     pointer-events: auto !important;
+    transform: translateY(0) !important;
+    opacity: 1 !important;
     display: flex !important;
   }
   .nav-actions .btn-subscribe,
