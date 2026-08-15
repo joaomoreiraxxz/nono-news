@@ -703,14 +703,14 @@
     loadDashboard();
   }
 
-  function logout() {
+  window.logout = function() {
     if (!confirm('Sair do painel?')) return;
     localStorage.removeItem(TOKEN_KEY);
     location.reload();
-  }
+  };
 
   /* ===== NAVIGATION ===== */
-  function showPanel(name) {
+  window.showPanel = function(name) {
     PANELS.forEach(p => {
       document.getElementById('panel-' + p).classList.toggle('active', p === name);
       const sNav = document.getElementById('nav-' + p);
@@ -723,7 +723,7 @@
     if (name === 'dashboard') loadDashboard();
     if (name === 'articles') loadArticles();
     if (name === 'ratings') loadRatings();
-  }
+  };
 
   /* ===== PUBLISH TYPE ===== */
   let publishType = 'news';
