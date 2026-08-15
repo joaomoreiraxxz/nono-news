@@ -87,7 +87,7 @@ if (isProd) {
   app.use(express.static(distPath));
 
   // SPA fallback — roteia corretamente dependendo do subdomínio
-  app.get('*', (req, res) => {
+  app.get('{*path}', (req, res) => {
     if (req.path.startsWith('/api')) return res.status(404).json({ error: 'Not found' });
     
     const host = req.hostname || '';
