@@ -634,7 +634,7 @@
       const [featured, articles, ratings] = await Promise.all([
         apiFetch('/articles/featured'),
         apiFetch('/articles'),
-        apiFetch('/ratings?limit=100')
+        apiFetch('/ratings/admin?limit=100')
       ]);
       const avg = ratings.length
         ? (ratings.reduce((a, r) => a + r.stars, 0) / ratings.length).toFixed(1)
@@ -642,9 +642,9 @@
 
       document.getElementById('stats-grid').innerHTML = `
         <div class="stat-card"><div class="stat-icon blue">📰</div><div class="stat-value">${articles.length}</div><div class="stat-label">Notícias</div></div>
-        <div class="stat-card"><div class="stat-icon purple">⭐</div><div class="stat-value">${featured.length}</div><div class="stat-label">Destaques</div></div>
-        <div class="stat-card"><div class="stat-icon green">💬</div><div class="stat-value">${ratings.length}</div><div class="stat-label">Avaliações</div></div>
-        <div class="stat-card"><div class="stat-icon yellow">⭐</div><div class="stat-value">${avg}</div><div class="stat-label">Média</div></div>
+        <div class="stat-card"><div class="stat-icon purple">Destaques</div><div class="stat-value">${featured.length}</div><div class="stat-label">Destaques</div></div>
+        <div class="stat-card"><div class="stat-icon green">Avaliações</div><div class="stat-value">${ratings.length}</div><div class="stat-label">Avaliações</div></div>
+        <div class="stat-card"><div class="stat-icon yellow">Média</div><div class="stat-value">${avg}</div><div class="stat-label">Média</div></div>
       `;
 
       const all = [...featured, ...articles].slice(0, 5);
@@ -658,7 +658,7 @@
           <thead><tr><th>Título</th><th>Tipo</th><th>Data</th></tr></thead>
           <tbody>${all.map(a => `<tr>
             <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.title}</td>
-            <td>${a.isFeatured ? '<span class="badge badge-yellow">⭐</span>' : '<span class="badge badge-gray">📰</span>'}</td>
+            <td>${a.isFeatured ? '<span class="badge badge-yellow">Destaque</span>' : '<span class="badge badge-gray">Noticia</span>'}</td>
             <td style="color:var(--muted);font-size:0.78rem;white-space:nowrap">${a.date || '—'}</td>
           </tr>`).join('')}</tbody>
         </table>`;
@@ -709,23 +709,26 @@
     el.innerHTML = '<div class="loading">Carregando...</div>';
     try {
       const [ratings, stats] = await Promise.all([
-        apiFetch('/ratings'), apiFetch('/ratings/stats')
+        apiFetch('/ratings/admin'), apiFetch('/ratings/stats')
       ]);
       document.getElementById('avg-rating').textContent = stats.average || '—';
       document.getElementById('total-ratings').textContent = stats.total;
 
       if (!ratings.length) {
-        el.innerHTML = '<div class="empty"><div class="empty-icon">⭐</div><p>Nenhuma avaliação ainda.</p></div>';
+        el.innerHTML = '<div class="empty"><p>Nenhuma avaliacao ainda.</p></div>';
         return;
       }
       el.innerHTML = `
         <table>
-          <thead><tr><th>Nome</th><th>Nota</th><th>Comentário</th><th>Ação</th></tr></thead>
+          <thead><tr><th>Nome</th><th>Nota</th><th>Status</th><th>Ação</th></tr></thead>
           <tbody>${ratings.map(r => `<tr>
-            <td style="white-space:nowrap"><strong>${r.name}</strong></td>
+            <td style="white-space:nowrap"><strong>${r.name}</strong><br><span style="font-size:0.7rem;color:var(--muted)">${r.comment || 'Sem comentario'}</span></td>
             <td><span class="stars">${stars(r.stars)}</span></td>
-            <td style="max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted);font-size:0.8rem">${r.comment || '—'}</td>
-            <td><button class="btn-danger" onclick="deleteRating(${r.id})">Excluir</button></td>
+            <td>${r.isApproved ? '<span class="badge badge-blue">Aprovado</span>' : '<span class="badge badge-yellow">Pendente</span>'}</td>
+            <td>
+              ${!r.isApproved ? `<button class="btn-primary" style="padding: 5px 10px; font-size: 0.75rem; width: auto; margin-right: 5px;" onclick="approveRating(${r.id})">Aprovar</button>` : ''}
+              <button class="btn-danger" onclick="deleteRating(${r.id})">Excluir</button>
+            </td>
           </tr>`).join('')}
           </tbody>
         </table>`;
@@ -734,8 +737,15 @@
     }
   }
 
+  window.approveRating = async function(id) {
+    try {
+      await apiFetch('/ratings/' + id + '/approve', { method: 'PUT' });
+      loadRatings();
+    } catch(err) { alert(err.message); }
+  };
+
   window.deleteRating = async function(id) {
-    if (!confirm('Excluir esta avaliação?')) return;
+    if (!confirm('Excluir esta avaliacao?')) return;
     try {
       await apiFetch('/ratings/' + id, { method: 'DELETE' });
       loadRatings();
@@ -760,7 +770,7 @@
         })
       });
       msg.className = 'form-msg success';
-      msg.textContent = publishType === 'featured' ? '⭐ Destaque publicado!' : '📰 Notícia publicada!';
+      msg.textContent = publishType === 'featured' ? 'Destaque publicado!' : 'Notícia publicada!';
       e.target.reset();
     } catch(err) {
       msg.className = 'form-msg error'; msg.textContent = err.message;

@@ -11,6 +11,29 @@ const router = Router();
 router.get('/', (req, res) => {
   try {
     const { is_site, article_id, limit } = req.query;
+    let query = 'SELECT * FROM ratings WHERE is_approved = 1';
+    const params = [];
+    if (is_site === 'true') query += ' AND is_site = 1';
+    if (article_id) { query += ' AND article_id = ?'; params.push(parseInt(article_id)); }
+    query += ' ORDER BY created_at DESC';
+    if (limit) { query += ' LIMIT ?'; params.push(parseInt(limit)); }
+
+    const rows = db.prepare(query).all(...params);
+    res.json(rows.map(row => ({
+      id: row.id, name: row.name, comment: row.comment, stars: row.stars,
+      articleId: row.article_id, isSite: !!row.is_site, isApproved: !!row.is_approved,
+      date: new Date(row.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
+    })));
+  } catch (err) {
+    console.error('Erro ao listar avaliacoes:', err.message);
+    res.status(500).json({ error: 'Erro ao buscar avaliacoes.' });
+  }
+});
+
+// ========== GET /api/ratings/admin (requer auth) ==========
+router.get('/admin', authMiddleware, (req, res) => {
+  try {
+    const { is_site, article_id, limit } = req.query;
     let query = 'SELECT * FROM ratings WHERE 1=1';
     const params = [];
     if (is_site === 'true') query += ' AND is_site = 1';
@@ -21,12 +44,12 @@ router.get('/', (req, res) => {
     const rows = db.prepare(query).all(...params);
     res.json(rows.map(row => ({
       id: row.id, name: row.name, comment: row.comment, stars: row.stars,
-      articleId: row.article_id, isSite: !!row.is_site,
+      articleId: row.article_id, isSite: !!row.is_site, isApproved: !!row.is_approved,
       date: new Date(row.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
     })));
   } catch (err) {
-    console.error('Erro ao listar avaliações:', err.message);
-    res.status(500).json({ error: 'Erro ao buscar avaliações.' });
+    console.error('Erro ao listar avaliacoes (admin):', err.message);
+    res.status(500).json({ error: 'Erro ao buscar avaliacoes.' });
   }
 });
 
@@ -34,13 +57,13 @@ router.get('/', (req, res) => {
 router.get('/stats', (req, res) => {
   try {
     const { is_site, article_id } = req.query;
-    let query = 'SELECT COUNT(*) as total, COALESCE(AVG(stars), 0) as average FROM ratings WHERE 1=1';
+    let query = 'SELECT COUNT(*) as total, COALESCE(AVG(stars), 0) as average FROM ratings WHERE is_approved = 1';
     const params = [];
     if (is_site === 'true') query += ' AND is_site = 1';
     if (article_id) { query += ' AND article_id = ?'; params.push(parseInt(article_id)); }
     const stats = db.prepare(query).get(...params);
 
-    let distQuery = 'SELECT stars, COUNT(*) as count FROM ratings WHERE 1=1';
+    let distQuery = 'SELECT stars, COUNT(*) as count FROM ratings WHERE is_approved = 1';
     const distParams = [];
     if (is_site === 'true') distQuery += ' AND is_site = 1';
     if (article_id) { distQuery += ' AND article_id = ?'; distParams.push(parseInt(article_id)); }
@@ -53,8 +76,8 @@ router.get('/stats', (req, res) => {
 
     res.json({ total: stats.total, average: parseFloat(parseFloat(stats.average).toFixed(1)), distribution });
   } catch (err) {
-    console.error('Erro ao buscar estatísticas:', err.message);
-    res.status(500).json({ error: 'Erro ao buscar estatísticas.' });
+    console.error('Erro ao buscar estatisticas:', err.message);
+    res.status(500).json({ error: 'Erro ao buscar estatisticas.' });
   }
 });
 
@@ -62,24 +85,37 @@ router.get('/stats', (req, res) => {
 router.post('/', (req, res) => {
   try {
     const { name, comment, stars, article_id, is_site } = req.body;
-    if (!name || name.trim().length === 0) return res.status(400).json({ error: 'Nome é obrigatório.' });
+    if (!name || name.trim().length === 0) return res.status(400).json({ error: 'Nome e obrigatorio.' });
     if (!stars || stars < 1 || stars > 5) return res.status(400).json({ error: 'Nota deve ser de 1 a 5 estrelas.' });
 
     const result = db.prepare(
-      'INSERT INTO ratings (name, comment, stars, article_id, is_site) VALUES (?, ?, ?, ?, ?)'
+      'INSERT INTO ratings (name, comment, stars, article_id, is_site, is_approved) VALUES (?, ?, ?, ?, ?, 0)'
     ).run(name.trim(), comment || null, stars, article_id || null, is_site ? 1 : 0);
 
     const row = db.prepare('SELECT * FROM ratings WHERE id = ?').get(result.lastInsertRowid);
     res.status(201).json({
-      message: `Valeu, ${row.name}! Sua avaliação de ${row.stars} estrela${row.stars > 1 ? 's' : ''} foi registrada.`,
+      message: 'Sua avaliacao foi enviada e esta aguardando aprovacao.',
       rating: {
-        id: row.id, name: row.name, comment: row.comment, stars: row.stars, isSite: !!row.is_site,
+        id: row.id, name: row.name, comment: row.comment, stars: row.stars, isSite: !!row.is_site, isApproved: false,
         date: new Date(row.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }),
       },
     });
   } catch (err) {
-    console.error('Erro ao criar avaliação:', err.message);
-    res.status(500).json({ error: 'Erro ao enviar avaliação.' });
+    console.error('Erro ao criar avaliacao:', err.message);
+    res.status(500).json({ error: 'Erro ao enviar avaliacao.' });
+  }
+});
+
+// ========== PUT /api/ratings/:id/approve (requer auth) ==========
+router.put('/:id/approve', authMiddleware, (req, res) => {
+  try {
+    const row = db.prepare('SELECT id FROM ratings WHERE id = ?').get(req.params.id);
+    if (!row) return res.status(404).json({ error: 'Avaliacao nao encontrada.' });
+    db.prepare('UPDATE ratings SET is_approved = 1 WHERE id = ?').run(req.params.id);
+    res.json({ message: 'Avaliacao aprovada com sucesso.' });
+  } catch (err) {
+    console.error('Erro ao aprovar avaliacao:', err.message);
+    res.status(500).json({ error: 'Erro ao aprovar avaliacao.' });
   }
 });
 
@@ -87,12 +123,12 @@ router.post('/', (req, res) => {
 router.delete('/:id', authMiddleware, (req, res) => {
   try {
     const row = db.prepare('SELECT id, name FROM ratings WHERE id = ?').get(req.params.id);
-    if (!row) return res.status(404).json({ error: 'Avaliação não encontrada.' });
+    if (!row) return res.status(404).json({ error: 'Avaliacao nao encontrada.' });
     db.prepare('DELETE FROM ratings WHERE id = ?').run(req.params.id);
-    res.json({ message: `Avaliação de "${row.name}" removida.` });
+    res.json({ message: 'Avaliacao removida.' });
   } catch (err) {
-    console.error('Erro ao remover avaliação:', err.message);
-    res.status(500).json({ error: 'Erro ao remover avaliação.' });
+    console.error('Erro ao remover avaliacao:', err.message);
+    res.status(500).json({ error: 'Erro ao remover avaliacao.' });
   }
 });
 

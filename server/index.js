@@ -122,6 +122,14 @@ function autoMigrate() {
       article_id INTEGER REFERENCES articles(id) ON DELETE CASCADE,
       is_site INTEGER DEFAULT 0, created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
+    
+    // Migracao para adicionar coluna is_approved se nao existir
+    try {
+      db.prepare('ALTER TABLE ratings ADD COLUMN is_approved INTEGER DEFAULT 0').run();
+    } catch (e) {
+      // Ignora erro se a coluna ja existe
+    }
+
     const existing = db.prepare('SELECT id FROM users WHERE email = ?').get('admin@escola.com');
     if (!existing) {
       const hash = bcrypt.hashSync('nono2026', 10);
