@@ -641,16 +641,16 @@
         : '—';
 
       document.getElementById('stats-grid').innerHTML = `
-        <div class="stat-card"><div class="stat-icon blue">📰</div><div class="stat-value">${articles.length}</div><div class="stat-label">Notícias</div></div>
-        <div class="stat-card"><div class="stat-icon purple">Destaques</div><div class="stat-value">${featured.length}</div><div class="stat-label">Destaques</div></div>
-        <div class="stat-card"><div class="stat-icon green">Avaliações</div><div class="stat-value">${ratings.length}</div><div class="stat-label">Avaliações</div></div>
-        <div class="stat-card"><div class="stat-icon yellow">Média</div><div class="stat-value">${avg}</div><div class="stat-label">Média</div></div>
+        <div class="stat-card"><div class="stat-icon blue"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg></div><div class="stat-value">${articles.length}</div><div class="stat-label">Notícias</div></div>
+        <div class="stat-card"><div class="stat-icon purple"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="stat-value">${featured.length}</div><div class="stat-label">Destaques</div></div>
+        <div class="stat-card"><div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="stat-value">${ratings.length}</div><div class="stat-label">Avaliações</div></div>
+        <div class="stat-card"><div class="stat-icon yellow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div class="stat-value">${avg}</div><div class="stat-label">Média</div></div>
       `;
 
       const all = [...featured, ...articles].slice(0, 5);
       if (!all.length) {
         document.getElementById('recent-articles').innerHTML =
-          '<div class="empty"><div class="empty-icon">📭</div><p>Nenhum artigo ainda.</p></div>';
+          '<div class="empty"><div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted)"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><p>Nenhum artigo ainda.</p></div>';
         return;
       }
       document.getElementById('recent-articles').innerHTML = `
@@ -677,7 +677,7 @@
       ]);
       const all = [...featured, ...articles];
       if (!all.length) {
-        el.innerHTML = '<div class="empty"><div class="empty-icon">📭</div><p>Nenhum artigo publicado.</p></div>';
+        el.innerHTML = '<div class="empty"><div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted)"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><p>Nenhum artigo publicado.</p></div>';
         return;
       }
       el.innerHTML = `
@@ -715,7 +715,7 @@
       document.getElementById('total-ratings').textContent = stats.total;
 
       if (!ratings.length) {
-        el.innerHTML = '<div class="empty"><p>Nenhuma avaliacao ainda.</p></div>';
+        el.innerHTML = '<div class="empty"><div class="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><p>Nenhuma avaliacao ainda.</p></div>';
         return;
       }
       el.innerHTML = `
